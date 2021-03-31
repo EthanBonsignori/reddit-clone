@@ -11,5 +11,7 @@ export default {
   entities: [Post],
   dbName: 'reddit-clone',
   type: 'postgresql',
+  user: 'postgres',
+  password: 'postgres',
   debug: !__prod__,
 } as Parameters<typeof MikroORM.init>[0];
