@@ -10,14 +10,17 @@ import {
 
 @ObjectType()
 @Entity()
-export class Post extends BaseEntity {
+export class User extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Field()
-  @Column({ type: 'text' })
-  title!: string;
+  @Column({ unique: true })
+  username!: string;
+
+  @Column()
+  password!: string;
 
   @Field(() => String)
   @CreateDateColumn()

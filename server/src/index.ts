@@ -1,16 +1,14 @@
 import 'reflect-metadata';
-import { MikroORM } from '@mikro-orm/core';
+import { createConnection } from 'typeorm'
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { __prod__ } from './constants';
 import { HelloResolver } from './resolvers/hello';
-import mikroConfig from './mikro-orm.config';
 import { PostResolver } from './resolvers/post';
 
 const main = async () => {
-  const orm = await MikroORM.init(mikroConfig);
-  await orm.getMigrator().up();
+  await createConnection();
 
   const app = express();
 
@@ -19,7 +17,7 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver],
       validate: false,
     }),
-    context: () => ({ em: orm.em })
+    context: () => { return }
   })
 
   apolloServer.applyMiddleware({ app })
