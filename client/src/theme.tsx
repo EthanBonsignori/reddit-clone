@@ -1,41 +1,54 @@
-import { extendTheme } from '@chakra-ui/react'
-import { createBreakpoints } from '@chakra-ui/theme-tools'
-
-const fonts = { mono: `'Menlo', monospace` }
+import { extendTheme } from '@chakra-ui/react';
+import { createBreakpoints } from '@chakra-ui/theme-tools';
 
 const breakpoints = createBreakpoints({
   sm: '40em',
   md: '52em',
   lg: '64em',
   xl: '80em',
-})
+});
 
 const theme = extendTheme({
-  colors: {
-    black: '#16161D',
+  global: {
+    body: {
+
+    },
   },
-  fonts,
+  config: {
+    initialColorMode: 'light',
+    useSystemColorMode: true,
+  },
+  colors: {
+    black: '#1a1a1b',
+    white: '#ffffff',
+    mainOrange: '#ff4500',
+
+    // light
+    lightText: '#222222',
+    lightButton: '#0079d3',
+    lightBg: '#DAE0E6',
+    lightNavBg: '#ffffff',
+    lightInputBg: '#f6f7f8',
+
+    // dark theme
+    darkText: '#d7dadc',
+    darkButton: '#D7DADC',
+    darkBg: '#030303',
+    darkNavBg: '#1A1A1B',
+    darkInputBg: '#272729',
+  },
+  fonts: {
+    body: 'ibm-plex-sans, sans-serif',
+  },
   breakpoints,
   icons: {
     logo: {
       path: (
-        <svg
-          width="3000"
-          height="3163"
-          viewBox="0 0 3000 3163"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect width="3000" height="3162.95" fill="none" />
-          <path
-            d="M1470.89 1448.81L2170 2488.19H820V706.392H2170L1470.89 1448.81ZM1408.21 1515.37L909.196 2045.3V2393.46H1998.84L1408.21 1515.37Z"
-            fill="currentColor"
-          />
-        </svg>
+        'placeholder'
       ),
-      viewBox: '0 0 3000 3163',
+      viewBox: '',
     },
   },
-})
+});
 
-export default theme
+export default theme;
