@@ -16,6 +16,7 @@
   "rules": {
     "eol-last": ["error", "always"],
     "semi": ["error", "always"],
+    "@typescript-eslint/no-empty-interface": "off",
     "max-len": [
       2,
       {
