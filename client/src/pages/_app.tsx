@@ -1,15 +1,17 @@
-import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react'
+import '@fontsource/ibm-plex-sans';
+import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { Provider, createClient } from 'urql';
-import theme from '../theme'
+import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
+import theme from '../theme';
 
 const client = createClient({
   url: 'http://localhost:4000/graphql',
   fetchOptions: {
     credentials: 'include',
-  }
-})
+  },
+});
 
-function MyApp({ Component, pageProps }: any) {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Provider value={client}>
       <ChakraProvider resetCSS theme={theme}>
@@ -22,7 +24,7 @@ function MyApp({ Component, pageProps }: any) {
         </ColorModeProvider>
       </ChakraProvider>
     </Provider>
-  )
-}
+  );
+};
 
-export default MyApp
+export default App;
