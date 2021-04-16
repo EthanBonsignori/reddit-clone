@@ -1,4 +1,5 @@
 import '@fontsource/ibm-plex-sans';
+import '@fontsource/noto-sans';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { Provider, createClient } from 'urql';
 import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
