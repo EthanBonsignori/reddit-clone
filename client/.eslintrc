@@ -25,7 +25,7 @@
         "ignoreUrls": true
       }
     ],
-    "indent": [
+    "@typescript-eslint/indent": [
       "error",
       2
     ],
