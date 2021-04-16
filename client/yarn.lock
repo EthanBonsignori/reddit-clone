@@ -1160,6 +1160,11 @@
   resolved "https://registry.npmjs.org/@fontsource/ibm-plex-sans/-/ibm-plex-sans-4.2.2.tgz"
   integrity sha512-RnUdFtHJcWtidq2/MOfqWHUGmMyhUOLJ3CMFL/rFg9tC8QAYthzLSAzwxagaCq31Ej+4HAIS6PDYnaNGC/YhAA==
 
+"@fontsource/noto-sans@^4.2.3":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans/-/noto-sans-4.2.3.tgz#14a0da9f25184fe659b83c4cec23ce21433cd395"
+  integrity sha512-Ugb41Pyo+XOGRyCD7m0xTLNt0oQS5N9ctyd5UojYjuCTExX461hZTnIs92xpr1mdv1mn2uftaLOsfm+pfuVgMQ==
+
 "@graphql-codegen/cli@1.21.3":
   version "1.21.3"
   resolved "https://registry.npmjs.org/@graphql-codegen/cli/-/cli-1.21.3.tgz"
