@@ -25,14 +25,14 @@ const theme = extendTheme({
 
     // light
     lightText: '#222222',
-    lightButton: '#0079d3',
+    lightButtonBg: '#0079d3',
     lightBg: '#DAE0E6',
     lightNavBg: '#ffffff',
     lightInputBg: '#f6f7f8',
 
     // dark theme
     darkText: '#d7dadc',
-    darkButton: '#D7DADC',
+    darkButtonBg: '#D7DADC',
     darkBg: '#030303',
     darkNavBg: '#1A1A1B',
     darkInputBg: '#272729',
