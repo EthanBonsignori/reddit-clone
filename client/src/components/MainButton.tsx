@@ -1,14 +1,20 @@
 import { Button } from '@chakra-ui/button';
 
 interface MainButtonProps {
-  text: string,
-  color: string,
-  bg: string,
-  border: string,
-  marginLeft?: string,
+  text: string;
+  color: string;
+  bg: string;
+  border: string;
+  marginLeft?: string;
 }
 
-const MainButton: React.FC<MainButtonProps> = ({ text, color, bg, border, marginLeft }) => {
+const MainButton: React.FC<MainButtonProps> = ({
+  text,
+  color,
+  bg,
+  border,
+  marginLeft,
+}) => {
   return (
     <Button
       as='a'
@@ -29,8 +35,7 @@ const MainButton: React.FC<MainButtonProps> = ({ text, color, bg, border, margin
       borderRadius='9999px'
       _hover={{
         opacity: '0.8',
-      }}
-    >
+      }}>
       {text}
     </Button>
   );

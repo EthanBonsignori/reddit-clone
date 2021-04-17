@@ -6,8 +6,7 @@ import { InputField } from '../components/InputField';
 import { useRegisterMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 
-interface registerProps {
-}
+interface registerProps {}
 
 const Register: React.FC<registerProps> = () => {
   const router = useRouter();
@@ -28,8 +27,7 @@ const Register: React.FC<registerProps> = () => {
     <Wrapper size='small'>
       <Formik
         initialValues={{ username: '', password: '' }}
-        onSubmit={handleSubmit}
-      >
+        onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
             <InputField
@@ -45,7 +43,14 @@ const Register: React.FC<registerProps> = () => {
                 label='Password'
               />
             </Box>
-            <Button type='submit' color='white' bgColor='teal' isLoading={isSubmitting} mt={4}>Register</Button>
+            <Button
+              type='submit'
+              color='white'
+              bgColor='teal'
+              isLoading={isSubmitting}
+              mt={4}>
+              Register
+            </Button>
           </Form>
         )}
       </Formik>

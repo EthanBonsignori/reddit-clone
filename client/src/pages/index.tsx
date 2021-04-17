@@ -13,8 +13,7 @@ const Index: React.FC = () => {
       bg={bg}
       color={color}
       minH='calc(100vh - 48px)'
-      mt='48px'
-    >
+      mt='48px'>
       <Navbar color={color} />
       <div>Hello World</div>
     </Stack>
