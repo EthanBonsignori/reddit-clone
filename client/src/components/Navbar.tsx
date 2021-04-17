@@ -1,18 +1,21 @@
 import { Box, Flex } from '@chakra-ui/layout';
-import { useColorModeValue } from '@chakra-ui/color-mode';
-import MainButton from './MainButton';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
-import { SearchIcon } from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/button';
+import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
+import { SearchIcon } from '@chakra-ui/icons';
 import DropdownMenu from './DropdownMenu';
+import MainButton from './MainButton';
 
 interface NavbarProps {
-  color: string
+  color: string;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ color }) => {
+  const { colorMode } = useColorMode();
   const navBg = useColorModeValue('lightNavBg', 'darkNavBg');
   const buttonBg = useColorModeValue('lightButtonBg', 'darkButtonBg');
+  const inputBg = useColorModeValue('lightInputBg', 'darkInputBg');
+  const inputBorder = useColorModeValue('#edeff1', '#343536');
   const navBorder = useColorModeValue('#edeff1', '#343536');
 
   return (
@@ -26,8 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
       right='0'
       mt='0'
       zIndex='100'
-      color={color}
-    >
+      color={color}>
       <Flex
         display='inline-flex'
         alignItems='center'
@@ -35,16 +37,14 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
         flexDirection='row'
         padding='0 20px'
         minW='100%'
-        borderBottom={`1px solid ${navBorder}`}
-      >
+        borderBottom={`1px solid ${navBorder}`}>
         {/* Home and Search Wrapper */}
-        <Flex 
+        <Flex
           display='inline-flex'
           alignItems='center'
           flexDirection='row'
           flexGrow={1}
-          verticalAlign='baseline'
-        > 
+          verticalAlign='baseline'>
           {/* Home Button */}
           <Box
             as='a'
@@ -53,27 +53,46 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
             title='Home'
             display='inline-flex'
             alignItems='center'
-            flexDirection='row'
-          >
+            flexDirection='row'>
             reddit
           </Box>
+          {/* Search Bar */}
           <Box maxW='690px' margin='0 auto' flexGrow={1}>
             <InputGroup width='100%' flexGrow={1}>
-              <InputLeftElement children={<SearchIcon />}/>
+              <InputLeftElement>
+                <SearchIcon color='iconGrey' />
+              </InputLeftElement>
               <Input
                 placeholder='Search'
+                fontSize='14px'
+                fontWeight='400'
+                lineHeight='21px'
                 width='100%'
+                bg={inputBg}
+                border='1px solid transparent'
+                borderColor={inputBorder}
+                _hover={{
+                  borderColor: colorMode === 'light' ? 'mainBlue' : 'white',
+                  bg: colorMode === 'light' ? 'white' : 'transparent',
+                }}
               />
             </InputGroup>
           </Box>
         </Flex>
-        <Flex
-          flexDirection='row'
-          alignItems='center'
-          flexGrow={0}
-        >
-          <MainButton text='Log In' bg='transparent' border={buttonBg} color={buttonBg} />
-          <MainButton text='Sign Up' bg={buttonBg} border='bg' color={navBg} marginLeft='16px'/>
+        <Flex flexDirection='row' alignItems='center' flexGrow={0}>
+          <MainButton
+            text='Log In'
+            bg='transparent'
+            border={buttonBg}
+            color={buttonBg}
+          />
+          <MainButton
+            text='Sign Up'
+            bg={buttonBg}
+            border='bg'
+            color={navBg}
+            marginLeft='16px'
+          />
           <Button
             width='70px'
             minH='32px'
@@ -86,10 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
             }}
             _focus={{
               outline: 'none',
-            }}
-          >
-          </Button>
-          {/* <ColorModeSwitch /> */}
+            }}></Button>
           <DropdownMenu />
         </Flex>
       </Flex>
