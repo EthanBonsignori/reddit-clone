@@ -8,11 +8,11 @@ interface DropdownMenuProps {}
 
 const DropdownMenu: React.FC<DropdownMenuProps> = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  console.log(colorMode);
   const bg = useColorModeValue('lightNavBg', 'darkNavBg');
   const borderColor = useColorModeValue('#edeff1', '#343536');
   const headerColor = useColorModeValue('#878a8c', '#818384');
   const buttonColor = useColorModeValue('#1c1c1c', '#d7dadc');
+  const iconColor = useColorModeValue('lightIcon', 'darkIcon');
   const buttonHoverBg = useColorModeValue('lightButtonBg', 'darkButtonBg');
   const buttonHoverColor = useColorModeValue('#ffffff', '#1c1c1c');
 
@@ -79,6 +79,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = () => {
           top='10px'
           width='20px'
           height='20px'
+          color={iconColor}
+          transition='none'
+          sx={{
+            '.nightModeButton:hover &': {
+              color: colorMode === 'light' ? '#fff' : '#000',
+            },
+          }}
         />
         Night Mode
         <Switch

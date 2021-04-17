@@ -1,10 +1,10 @@
 import { Box, Flex } from '@chakra-ui/layout';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
-import { Button } from '@chakra-ui/button';
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import { SearchIcon } from '@chakra-ui/icons';
-import DropdownMenu from './DropdownMenu';
-import MainButton from './MainButton';
+import { useMeQuery } from '../generated/graphql';
+import NotLoggedIn from './navbar/NotLoggedIn';
+import LoggedIn from './navbar/LoggedIn';
 
 interface NavbarProps {
   color: string;
@@ -13,10 +13,23 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ color }) => {
   const { colorMode } = useColorMode();
   const navBg = useColorModeValue('lightNavBg', 'darkNavBg');
-  const buttonBg = useColorModeValue('lightButtonBg', 'darkButtonBg');
   const inputBg = useColorModeValue('lightInputBg', 'darkInputBg');
   const inputBorder = useColorModeValue('#edeff1', '#343536');
   const navBorder = useColorModeValue('#edeff1', '#343536');
+  const iconColor = useColorModeValue('lightIcon', 'darkIcon');
+
+  const [{ data, fetching }] = useMeQuery();
+  let menu = <NotLoggedIn />;
+
+  // loading
+  if (fetching) {
+    // User not logged in
+  } else if (!data?.me) {
+    menu = <NotLoggedIn />;
+    // User logged in
+  } else {
+    menu = <LoggedIn user={data.me} />;
+  }
 
   return (
     <Flex
@@ -60,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
           <Box maxW='690px' margin='0 auto' flexGrow={1}>
             <InputGroup width='100%' flexGrow={1}>
               <InputLeftElement>
-                <SearchIcon color='iconGrey' />
+                <SearchIcon color={iconColor} />
               </InputLeftElement>
               <Input
                 placeholder='Search'
@@ -79,35 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
             </InputGroup>
           </Box>
         </Flex>
-        <Flex flexDirection='row' alignItems='center' flexGrow={0}>
-          <MainButton
-            text='Log In'
-            bg='transparent'
-            border={buttonBg}
-            color={buttonBg}
-          />
-          <MainButton
-            text='Sign Up'
-            bg={buttonBg}
-            border='bg'
-            color={navBg}
-            marginLeft='16px'
-          />
-          <Button
-            width='70px'
-            minH='32px'
-            ml='8px'
-            outline='none'
-            border='1px solid transparent'
-            borderRadius='4px'
-            _hover={{
-              borderColor: '#343536',
-            }}
-            _focus={{
-              outline: 'none',
-            }}></Button>
-          <DropdownMenu />
-        </Flex>
+        {menu}
       </Flex>
     </Flex>
   );
