@@ -1,11 +1,11 @@
-import { Resolver, Query, Arg, Mutation } from 'type-graphql'
+import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { Post } from '../entities/Post';
 
 @Resolver()
 export class PostResolver {
   @Query(() => [Post])
   async posts(): Promise<Post[]> {
-    return Post.find()
+    return Post.find();
   }
 
   @Query(() => Post, { nullable: true })
@@ -14,15 +14,14 @@ export class PostResolver {
   }
 
   @Mutation(() => Post)
-  async createPost(
-    @Arg('title') title: string): Promise<Post> {
+  async createPost(@Arg('title') title: string): Promise<Post> {
     return Post.create({ title }).save();
   }
 
   @Mutation(() => Post)
   async updatePost(
     @Arg('id') id: number,
-    @Arg('title', () => String, { nullable: true }) title: string
+    @Arg('title', () => String, { nullable: true }) title: string,
   ): Promise<Post | null> {
     const post = await Post.findOne(id);
     if (!post) {
@@ -30,18 +29,18 @@ export class PostResolver {
     }
     if (typeof title !== 'undefined') {
       post.title = title;
-      await Post.update({ id }, { title })
+      await Post.update({ id }, { title });
     }
     return post;
   }
 
   @Mutation(() => Boolean)
-  async deletePost(@Arg('id') id: number): Promise<Boolean> {
+  async deletePost(@Arg('id') id: number): Promise<boolean> {
     try {
       await Post.delete(id);
     } catch (err) {
-      return false
+      return false;
     }
-    return true
+    return true;
   }
 }
