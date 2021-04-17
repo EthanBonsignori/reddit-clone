@@ -11,7 +11,7 @@ import {
 import argon2 from 'argon2';
 import { User } from '../entities/User';
 import { MyContext } from 'src/types';
-import { COOKIE_NAME } from 'src/constants';
+import { COOKIE_NAME } from '../constants';
 // import { MyContext } from 'src/types';
 
 @ObjectType()
