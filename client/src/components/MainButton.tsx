@@ -5,16 +5,9 @@ interface MainButtonProps {
   color: string;
   bg: string;
   border: string;
-  marginLeft?: string;
 }
 
-const MainButton: React.FC<MainButtonProps> = ({
-  text,
-  color,
-  bg,
-  border,
-  marginLeft,
-}) => {
+const MainButton: React.FC<MainButtonProps> = ({ text, color, bg, border }) => {
   return (
     <Button
       as='a'
@@ -26,7 +19,6 @@ const MainButton: React.FC<MainButtonProps> = ({
       h='34px'
       minW='32px'
       width='auto'
-      marginLeft={marginLeft || '0'}
       fontSize='14px'
       color={color}
       bg={bg}
