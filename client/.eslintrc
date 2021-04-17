@@ -37,14 +37,6 @@
     "eol-last": ["error", "always"],
     "semi": ["error", "always"],
     "@typescript-eslint/no-empty-interface": "off",
-    "max-len": [
-      2,
-      {
-        "code": 120,
-        "tabWidth": 4,
-        "ignoreUrls": true
-      }
-    ],
     "@typescript-eslint/indent": [
       "error",
       2
@@ -56,16 +48,6 @@
     "quotes": [
       "error",
       "single"
-    ],
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "always-multiline",
-        "exports": "always-multiline",
-        "functions": "never"
-      }
     ],
     "no-console": "off",
     "react/react-in-jsx-scope": "off",
