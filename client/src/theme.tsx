@@ -21,7 +21,6 @@ const theme = extendTheme({
     white: '#ffffff',
     mainOrange: '#ff4500',
     mainBlue: '#0079d3',
-    iconGrey: '#878a8c',
 
     // light
     lightText: '#222222',
@@ -29,6 +28,7 @@ const theme = extendTheme({
     lightBg: '#DAE0E6',
     lightNavBg: '#ffffff',
     lightInputBg: '#f6f7f8',
+    lightIcon: '#878a8c',
 
     // dark theme
     darkText: '#d7dadc',
@@ -36,6 +36,7 @@ const theme = extendTheme({
     darkBg: '#030303',
     darkNavBg: '#1A1A1B',
     darkInputBg: '#272729',
+    darkIcon: '#818384',
   },
   fonts: {
     body: 'IBM Plex Sans, sans-serif',
