@@ -35,6 +35,7 @@
     "semi": ["error", "always"],
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/indent": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "linebreak-style": ["error", "unix"],
     "quotes": [2, "single", { "avoidEscape": true }],
     "no-console": "off",
