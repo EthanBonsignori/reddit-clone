@@ -10,9 +10,7 @@ const breakpoints = createBreakpoints({
 
 const theme = extendTheme({
   global: {
-    body: {
-
-    },
+    body: {},
   },
   config: {
     initialColorMode: 'light',
@@ -22,6 +20,8 @@ const theme = extendTheme({
     black: '#1a1a1b',
     white: '#ffffff',
     mainOrange: '#ff4500',
+    mainBlue: '#0079d3',
+    iconGrey: '#878a8c',
 
     // light
     lightText: '#222222',
@@ -38,14 +38,12 @@ const theme = extendTheme({
     darkInputBg: '#272729',
   },
   fonts: {
-    body: 'ibm-plex-sans, sans-serif',
+    body: 'IBM Plex Sans, sans-serif',
   },
   breakpoints,
   icons: {
     logo: {
-      path: (
-        'placeholder'
-      ),
+      path: 'placeholder',
       viewBox: '',
     },
   },
