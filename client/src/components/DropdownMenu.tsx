@@ -4,9 +4,7 @@ import { MoonIcon } from '@chakra-ui/icons';
 import { Box, Heading } from '@chakra-ui/layout';
 import { Switch } from '@chakra-ui/switch';
 
-interface DropdownMenuProps {
-
-}
+interface DropdownMenuProps {}
 
 const DropdownMenu: React.FC<DropdownMenuProps> = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -37,18 +35,78 @@ const DropdownMenu: React.FC<DropdownMenuProps> = () => {
       borderRadius='0 0 4px 4px'
       overflow='hidden'
       pt='6px'
-      zIndex='80'
-    >
+      zIndex='80'>
       <Heading
         as='h3'
         color={headerColor}
         fontSize='10px'
         fontWeight='700'
         lineHeight='12px'
+        letterSpacing='.5px'
         textTransform='uppercase'
-        margin='8px 0 4px 12px'
-      >
+        fontFamily='IBM Plex Sans'
+        margin='8px 0 4px 12px'>
         View Options
+      </Heading>
+      <Button
+        className='nightModeButton'
+        display='flex'
+        alignItems='center'
+        justifyContent='space-between'
+        textAlign='left'
+        bg='none'
+        borderRadius='0'
+        height='40px'
+        margin='4px 0'
+        padding='10px 16px 10px 48px'
+        width='100%'
+        fontSize='14px'
+        fontWeight='500'
+        lineHeight='18px'
+        fontFamily='IBM Plex Sans'
+        color={buttonColor}
+        _hover={{
+          bg: buttonHoverBg,
+          color: buttonHoverColor,
+        }}
+        _focus={{
+          boxShadow: 'none',
+        }}
+        onClickCapture={toggleColor}>
+        <MoonIcon
+          position='absolute'
+          left='16px'
+          top='10px'
+          width='20px'
+          height='20px'
+        />
+        Night Mode
+        <Switch
+          sx={{
+            '.nightModeButton:hover & .css-1b2twv6': {
+              background: 'rgba(26, 26, 27, 0.1)',
+            },
+            '.css-166s8ot[data-checked]': {
+              background: 'mainBlue',
+            },
+          }}
+          aria-label='Dark Mode Toggle'
+          pointerEvents='none'
+          transition='none'
+          isChecked={colorMode === 'dark'}
+        />
+      </Button>
+      <Heading
+        as='h3'
+        color={headerColor}
+        fontSize='10px'
+        fontWeight='700'
+        lineHeight='12px'
+        letterSpacing='.5px'
+        textTransform='uppercase'
+        fontFamily='IBM Plex Sans'
+        margin='8px 0 4px 12px'>
+        More Stuff
       </Heading>
       <Button
         display='flex'
@@ -62,6 +120,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = () => {
         padding='10px 16px 10px 48px'
         width='100%'
         fontSize='14px'
+        fontWeight='500'
+        lineHeight='18px'
+        fontFamily='IBM Plex Sans'
         color={buttonColor}
         _hover={{
           bg: buttonHoverBg,
@@ -69,36 +130,85 @@ const DropdownMenu: React.FC<DropdownMenuProps> = () => {
         }}
         _focus={{
           boxShadow: 'none',
-        }}
-        onClickCapture={toggleColor}
-      >
-        <MoonIcon
-          position='absolute'
-          left='16px'
-          top='10px'
-          width='20px'
-          height='20px'
-        />
-        Night Mode
-        <Switch
-          colorScheme='blue'
-          aria-label='Dark Mode Toggle'
-          pointerEvents='none'
-          isChecked={colorMode === 'dark'}
-        />
+        }}>
+        Reddit Coins
       </Button>
-      <Heading
-        as='h3'
-        color={headerColor}
-        fontSize='11px'
-        fontWeight='700'
-        lineHeight='12px'
-        textTransform='uppercase'
-        margin='8px 0 4px 12px'
-     
-      >
-        More Stuff
-      </Heading>
+      <Button
+        display='flex'
+        alignItems='center'
+        justifyContent='space-between'
+        textAlign='left'
+        bg='none'
+        borderRadius='0'
+        height='40px'
+        margin='4px 0'
+        padding='10px 16px 10px 48px'
+        width='100%'
+        fontSize='14px'
+        fontWeight='500'
+        lineHeight='18px'
+        fontFamily='IBM Plex Sans'
+        color={buttonColor}
+        _hover={{
+          bg: buttonHoverBg,
+          color: buttonHoverColor,
+        }}
+        _focus={{
+          boxShadow: 'none',
+        }}>
+        Reddit Premium
+      </Button>
+      <Button
+        display='flex'
+        alignItems='center'
+        justifyContent='space-between'
+        textAlign='left'
+        bg='none'
+        borderRadius='0'
+        height='40px'
+        margin='4px 0'
+        padding='10px 16px 10px 48px'
+        width='100%'
+        fontSize='14px'
+        fontWeight='500'
+        lineHeight='18px'
+        fontFamily='IBM Plex Sans'
+        color={buttonColor}
+        _hover={{
+          bg: buttonHoverBg,
+          color: buttonHoverColor,
+        }}
+        _focus={{
+          boxShadow: 'none',
+        }}>
+        Help Center
+      </Button>
+      <Box borderTop='1px solid' borderColor={borderColor} margin='0 16px' />
+      <Button
+        display='flex'
+        alignItems='center'
+        justifyContent='space-between'
+        textAlign='left'
+        bg='none'
+        borderRadius='0'
+        height='40px'
+        margin='4px 0'
+        padding='10px 16px 10px 48px'
+        width='100%'
+        fontSize='14px'
+        fontWeight='500'
+        lineHeight='18px'
+        fontFamily='IBM Plex Sans'
+        color={buttonColor}
+        _hover={{
+          bg: buttonHoverBg,
+          color: buttonHoverColor,
+        }}
+        _focus={{
+          boxShadow: 'none',
+        }}>
+        Log In / Sign Up
+      </Button>
     </Box>
   );
 };
