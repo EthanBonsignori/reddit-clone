@@ -5,6 +5,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { useMeQuery } from '../generated/graphql';
 import NotLoggedIn from './navbar/NotLoggedIn';
 import LoggedIn from './navbar/LoggedIn';
+import { isServer } from '../utils/isServer';
 
 interface NavbarProps {
   color: string;
@@ -18,9 +19,11 @@ export const Navbar: React.FC<NavbarProps> = ({ color }) => {
   const navBorder = useColorModeValue('#edeff1', '#343536');
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
 
-  const [{ data, fetching }] = useMeQuery();
-  let menu = <NotLoggedIn />;
+  const [{ data, fetching }] = useMeQuery({
+    pause: isServer(),
+  });
 
+  let menu = <NotLoggedIn />;
   // loading
   if (fetching) {
     // User not logged in
