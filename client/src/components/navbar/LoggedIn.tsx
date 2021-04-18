@@ -1,6 +1,7 @@
 import { TriangleDownIcon } from '@chakra-ui/icons';
 import { Flex, Button, useColorModeValue } from '@chakra-ui/react';
 import DropdownMenu from './DropdownMenu';
+import { useLogoutMutation } from '../../generated/graphql';
 
 interface LoggedInProps {
   user: Record<string, unknown>;
@@ -8,6 +9,7 @@ interface LoggedInProps {
 
 const LoggedIn: React.FC<LoggedInProps> = ({ user }) => {
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   return (
     <Flex flexDirection='row' alignItems='center' flexGrow={0}>
       <Button
@@ -26,8 +28,13 @@ const LoggedIn: React.FC<LoggedInProps> = ({ user }) => {
         {user.username}
         <TriangleDownIcon color={iconColor} />
       </Button>
-      <Button>Logout</Button>
-      <DropdownMenu />
+      <Button
+        onClick={() => logout()}
+        disabled={logoutFetching}
+        isLoading={logoutFetching}>
+        Logout
+      </Button>
+      <DropdownMenu loggedIn={true} />
     </Flex>
   );
 };
