@@ -1,24 +1,24 @@
-import 'reflect-metadata';
-import { createConnection } from 'typeorm';
-import redis from 'redis';
+import { ApolloServer } from 'apollo-server-express';
 import connectRedis from 'connect-redis';
+import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
-import cors from 'cors';
-import { ApolloServer } from 'apollo-server-express';
+import Redis from 'ioredis';
+import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
-import { MyContext } from './types';
+import { createConnection } from 'typeorm';
 import { COOKIE_NAME, __prod__ } from './constants';
 import { HelloResolver } from './resolvers/hello';
 import { PostResolver } from './resolvers/post';
 import { UserResolver } from './resolvers/user';
+import { MyContext } from './types';
 
 const main = async () => {
   await createConnection();
 
   const app = express();
   const RedisStore = connectRedis(session);
-  const redisClient = redis.createClient();
+  const redis = new Redis();
 
   app.use(
     cors({
@@ -31,7 +31,7 @@ const main = async () => {
     session({
       name: COOKIE_NAME,
       store: new RedisStore({
-        client: redisClient,
+        client: redis,
         disableTouch: true,
       }),
       cookie: {
@@ -51,7 +51,7 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: ({ req, res }): MyContext => ({ req, res }),
+    context: ({ req, res }): MyContext => ({ req, res, redis }),
   });
 
   apolloServer.applyMiddleware({
