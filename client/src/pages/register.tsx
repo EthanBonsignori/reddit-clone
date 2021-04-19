@@ -15,7 +15,7 @@ const Register: React.FC<registerProps> = () => {
   const [, register] = useRegisterMutation();
 
   const handleSubmit = async (values: any, { setErrors }: any) => {
-    const response = await register(values);
+    const response = await register({ options: values });
     console.log(response);
     if (response.data?.register.errors) {
       setErrors(toErrorMap(response.data.register.errors));
@@ -28,7 +28,12 @@ const Register: React.FC<registerProps> = () => {
   return (
     <Wrapper size='small'>
       <Formik
-        initialValues={{ username: '', password: '' }}
+        initialValues={{
+          email: '',
+          username: '',
+          password: '',
+          passwordRepeat: '',
+        }}
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
@@ -39,10 +44,26 @@ const Register: React.FC<registerProps> = () => {
             />
             <Box mt={4}>
               <InputField
+                type='email'
+                name='email'
+                placeholder='Email'
+                label='Email'
+              />
+            </Box>
+            <Box mt={4}>
+              <InputField
                 type='password'
                 name='password'
                 placeholder='Password'
                 label='Password'
+              />
+            </Box>
+            <Box mt={4}>
+              <InputField
+                type='password'
+                name='passwordRepeat'
+                placeholder='Repeat Password'
+                label='Repeat Password'
               />
             </Box>
             <Button
