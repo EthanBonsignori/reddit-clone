@@ -158,10 +158,16 @@ export class UserResolver {
       1000 * 60 * 60 * 1, // 1hr
     );
 
-    await sendEmail(
-      email,
-      `Click here to <a href='http://localhost:3000/reset-password/${token}'>reset your password</a>.`,
-    );
+    try {
+      await sendEmail(
+        email,
+        `Click here to <a href='http://localhost:3000/reset-password/${token}'>reset your password</a>.`,
+      );
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   }
 
   @Mutation(() => UserResponse)
@@ -192,12 +198,13 @@ export class UserResolver {
       };
     }
 
-    const userId = await redis.get(`${FORGOT_PASSWORD_PREFIX}${token}`);
+    const key = `${FORGOT_PASSWORD_PREFIX}${token}`;
+    const userId = await redis.get(key);
     if (!userId) {
       return {
         errors: [
           {
-            field: 'password',
+            field: 'api',
             message: 'Token expired or invalid',
           },
         ],
@@ -209,7 +216,7 @@ export class UserResolver {
       return {
         errors: [
           {
-            field: 'password',
+            field: 'api',
             message: 'User no longer exists',
           },
         ],
@@ -232,6 +239,8 @@ export class UserResolver {
       };
     }
 
+    // remove token from redis
+    await redis.del(key);
     // log in user
     req.session.userId = user.id;
 
