@@ -12,14 +12,8 @@ const Index: React.FC = () => {
   const [{ data }] = usePostsQuery();
 
   return (
-    <Stack
-      as='main'
-      align='center'
-      bg={bg}
-      color={color}
-      minH='calc(100vh - 48px)'
-      mt='48px'>
-      <Navbar color={color} />
+    <Stack as='main' align='center' bg={bg} color={color} minH='calc(100vh)'>
+      <Navbar />
       <div>Hello World</div>
       <br />
       {!data ? (
