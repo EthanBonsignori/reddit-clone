@@ -25,7 +25,6 @@ const Login: React.FC = () => {
     { setErrors }: FormikHelpers<FormValues>,
   ) => {
     const response = await login(values);
-    console.log(response);
     if (response.data?.login.errors) {
       return setErrors(toErrorMap(response.data.login.errors));
     } else if (response.data?.login.user) {
