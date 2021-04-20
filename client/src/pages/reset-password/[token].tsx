@@ -7,7 +7,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { InputField } from '../../components/InputField';
-import { Wrapper } from '../../components/Wrapper';
+import Layout from '../../components/Layout';
 import { useChangePasswordMutation } from '../../generated/graphql';
 import { createUrqlClient } from '../../utils/createUrqlClient';
 import { toErrorMap } from '../../utils/toErrorMap';
@@ -46,7 +46,7 @@ const ResetPassword: NextPage<{ token: string }> = ({ token }) => {
   };
 
   return (
-    <Wrapper size='small'>
+    <Layout wrapperSize='small'>
       <Formik
         initialValues={{ password: '', passwordRepeat: '' }}
         onSubmit={handleSubmit}>
@@ -103,7 +103,7 @@ const ResetPassword: NextPage<{ token: string }> = ({ token }) => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 

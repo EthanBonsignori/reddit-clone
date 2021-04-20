@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 import { useState } from 'react';
 import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
-import { Wrapper } from '../components/Wrapper';
+import Layout from '../components/Layout';
 import { useForgotPasswordMutation } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 
@@ -24,7 +24,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <Wrapper size='small'>
+    <Layout wrapperSize='small'>
       <Formik initialValues={{ email: '' }} onSubmit={handleSubmit}>
         {({ isSubmitting }) =>
           isComplete ? (
@@ -83,7 +83,7 @@ const ForgotPassword: React.FC = () => {
           )
         }
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 

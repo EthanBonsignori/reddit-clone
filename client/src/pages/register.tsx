@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
-import { Wrapper } from '../components/Wrapper';
+import Layout from '../components/Layout';
 import { useRegisterMutation } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { toErrorMap } from '../utils/toErrorMap';
@@ -37,7 +37,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <Wrapper size='small'>
+    <Layout wrapperSize='small'>
       <Formik
         initialValues={{
           email: '',
@@ -96,7 +96,7 @@ const Register: React.FC = () => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 
