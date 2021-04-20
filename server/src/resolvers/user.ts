@@ -37,14 +37,13 @@ class UserResponse {
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
-  async me(@Ctx() { req }: MyContext) {
+  me(@Ctx() { req }: MyContext) {
     // User not logged in
     if (!req.session.userId) {
       return null;
     }
 
-    const user = await User.findOne({ id: req.session.userId });
-    return user;
+    return User.findOne({ id: req.session.userId });
   }
 
   @Mutation(() => UserResponse)
@@ -71,7 +70,7 @@ export class UserResolver {
           errors: [
             {
               field: 'username',
-              message: 'Username already taken',
+              message: 'Username or email address already taken',
             },
           ],
         };
