@@ -1,19 +1,26 @@
-import { isAuth } from '../middleware/isAuth';
-import { MyContext } from '../types';
 import {
-  Resolver,
-  Query,
   Arg,
-  Mutation,
-  InputType,
-  Field,
   Ctx,
+  Field,
+  FieldResolver,
+  InputType,
+  Int,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
+  Root,
   UseMiddleware,
 } from 'type-graphql';
+import { getConnection } from 'typeorm';
 import { Post } from '../entities/Post';
+import { isAuth } from '../middleware/isAuth';
+import { MyContext } from '../types';
+import { FieldError } from '../utils/FieldError';
+import { validatePost } from '../utils/validatePost';
 
 @InputType()
-class PostInput {
+export class PostInput {
   @Field()
   title: string;
 
@@ -21,11 +28,64 @@ class PostInput {
   text: string;
 }
 
-@Resolver()
+@ObjectType()
+class PaginatedPosts {
+  @Field(() => [Post])
+  posts: Post[];
+
+  @Field()
+  hasMore: boolean;
+}
+
+@ObjectType()
+class PostResponse {
+  @Field(() => [FieldError], { nullable: true })
+  errors?: FieldError[];
+
+  @Field(() => Post, { nullable: true })
+  post?: Post;
+}
+
+@Resolver(Post)
 export class PostResolver {
-  @Query(() => [Post])
-  async posts(): Promise<Post[]> {
-    return Post.find();
+  @FieldResolver(() => String)
+  textSnippet(@Root() root: Post) {
+    return root.text.slice(0, 50);
+  }
+
+  @Query(() => PaginatedPosts)
+  async posts(
+    @Arg('limit', () => Int) limit: number,
+    @Arg('cursor', () => String, { nullable: true }) cursor: string | null,
+  ): Promise<PaginatedPosts> {
+    const realLimit = Math.min(50, limit);
+    const realLimitPlusOne = realLimit + 1;
+
+    const replacements: any[] = [realLimitPlusOne];
+    if (cursor) {
+      replacements.push(new Date(parseInt(cursor)));
+    }
+
+    const posts = await getConnection().query(
+      `
+      SELECT p.*,
+      json_build_object(
+        'id', u.id,
+        'username', u.username,
+      ) creator
+      FROM post p
+      INNER JOIN public.user u ON u.id = p."creatorId"
+      ${cursor && 'WHERE p."createdAt" < $2'}
+      ORDER BY p."createdAt" DESC
+      LIMIT $1
+    `,
+      replacements,
+    );
+
+    return {
+      posts: posts.slice(0, realLimit),
+      hasMore: posts.length === realLimitPlusOne,
+    };
   }
 
   @Query(() => Post, { nullable: true })
@@ -33,16 +93,39 @@ export class PostResolver {
     return Post.findOne(id);
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => PostResponse)
   @UseMiddleware(isAuth)
   async createPost(
     @Arg('input') input: PostInput,
     @Ctx() { req }: MyContext,
-  ): Promise<Post> {
-    return Post.create({
-      ...input,
-      creatorId: req.session.userId,
-    }).save();
+  ): Promise<PostResponse> {
+    const errors = validatePost(input);
+    if (errors) {
+      return { errors };
+    }
+
+    let post;
+    try {
+      post = await Post.create({
+        ...input,
+        creatorId: req.session.userId,
+      }).save();
+    } catch (err) {
+      if (err) {
+        return {
+          errors: [
+            {
+              field: 'api',
+              message: `Error from API: ${err}`,
+            },
+          ],
+        };
+      }
+    }
+
+    return {
+      post,
+    };
   }
 
   @Mutation(() => Post)
