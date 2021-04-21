@@ -1,7 +1,6 @@
 import { CloseIcon, WarningIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Link } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,10 +16,12 @@ interface FormValues {
   passwordRepeat: string;
 }
 
-const ResetPassword: NextPage<{ token: string }> = ({ token }) => {
+const ResetPassword: React.FC = () => {
   const [apiError, setApiError] = useState('');
-  const router = useRouter();
   const [, changePassword] = useChangePasswordMutation();
+  const router = useRouter();
+  const token =
+    typeof router.query?.token === 'string' ? router.query.token : '';
 
   const handleSubmit = async (
     values: FormValues,
@@ -105,12 +106,6 @@ const ResetPassword: NextPage<{ token: string }> = ({ token }) => {
       </Formik>
     </Layout>
   );
-};
-
-ResetPassword.getInitialProps = ({ query }) => {
-  return {
-    token: query.token as string,
-  };
 };
 
 export default withUrqlClient(createUrqlClient)(ResetPassword);
