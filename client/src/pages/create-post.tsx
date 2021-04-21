@@ -1,10 +1,14 @@
-import { Box, Button } from '@chakra-ui/react';
+import { CloseIcon, WarningIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, Link } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useCreatePostMutation } from '../generated/graphql';
+import { useIsAuth } from '../hooks/useIsAuth';
 import { createUrqlClient } from '../utils/createUrqlClient';
 
 interface FormValues {
@@ -13,15 +17,19 @@ interface FormValues {
 }
 
 const CreatePost: React.FC = () => {
+  useIsAuth();
   const router = useRouter();
+  const [apiError, setApiError] = useState('');
   const [, createPost] = useCreatePostMutation();
 
   const handleSubmit = async (
     values: FormValues,
     // { setErrors }: FormikHelpers<FormValues>,
   ) => {
-    await createPost({ input: values });
-    // if (response.data?.createPost.errors)
+    const response = await createPost({ input: values });
+    if (response?.error) {
+      return setApiError(response.error.message);
+    }
     router.push('/');
   };
 
@@ -30,7 +38,37 @@ const CreatePost: React.FC = () => {
       <Formik initialValues={{ title: '', text: '' }} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <InputField name='title' placeholder='Title' label='Post Title' />
+            {apiError && (
+              <Box
+                pos='relative'
+                border='1px solid grey'
+                borderRadius='5px'
+                padding={3}
+                mb={4}>
+                <Flex alignItems='center' color='red' mb={3}>
+                  <WarningIcon mr={1} />
+                  {apiError}
+                </Flex>
+                <NextLink href='/login' passHref>
+                  <Link
+                    display='flex'
+                    alignItems='center'
+                    _hover={{ opacity: '0.7', textDecoration: 'underline' }}>
+                    Log In
+                  </Link>
+                </NextLink>
+                <Box
+                  _hover={{ cursor: 'pointer', opacity: '0.5' }}
+                  onClick={() => setApiError('')}>
+                  <CloseIcon pos='absolute' top='12px' right='12px' h={3} />
+                </Box>
+              </Box>
+            )}
+            <InputField
+              name='title'
+              placeholder='Your Post Title'
+              label='Title'
+            />
             <Box mt={4}>
               <InputField
                 textarea
