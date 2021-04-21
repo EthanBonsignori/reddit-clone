@@ -1,6 +1,6 @@
-# cReddit - Reddit Clone
-
 <img src="https://i.imgur.com/J7Rvi5K.png" alt="cReddit Logo" width="200" align="right" />
+
+# cReddit - Reddit Clone
 
 cReddit is an app that seeks to clone (new) reddit's homepage using React and Chakra UI. The reason I am creating this app is to learn new frameworks along the way. While creating cReddit, I am teaching myself Typescript, GraphQL, Typeorm, Apollo, Chakra UI, and more. It's a sort of trial by fire!
 
