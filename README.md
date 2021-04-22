@@ -34,3 +34,8 @@ Built with:
 - Redis
 - Postgres (pg)
 - TypeORM
+
+### TODOS
+
+- Add more form validation (yup or validator)
+- Allow user to cancel vote by selecting the same vote again
