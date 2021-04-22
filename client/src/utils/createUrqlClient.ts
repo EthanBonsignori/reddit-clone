@@ -52,11 +52,11 @@ const cursorPagination = (): Resolver => {
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
   let cookie = '';
   if (isServer()) {
-    cookie = ctx.req.headers.cookie;
+    cookie = ctx?.req?.headers?.cookie;
   }
 
   return {
-    url: 'http://localhost:4000/graphql',
+    url: process.env.NEXT_PUBLIC_API_URL as string,
     fetchOptions: {
       credentials: 'include' as const,
       headers: {
