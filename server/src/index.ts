@@ -5,43 +5,58 @@ import express from 'express';
 import session from 'express-session';
 import Redis from 'ioredis';
 import 'reflect-metadata';
+import 'dotenv-safe/config';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
-import { COOKIE_NAME, __prod__ } from './constants';
+import { __prod__ } from './constants';
 import { HelloResolver } from './resolvers/hello';
 import { PostResolver } from './resolvers/post';
 import { UserResolver } from './resolvers/user';
 import { MyContext } from './types';
 
 const main = async () => {
-  await createConnection();
+  const conn = await createConnection({
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    logging: true,
+    entities: ['dist/entities/*.js'],
+    migrations: ['dist/migrations/*.js'],
+    cli: {
+      migrationsDir: 'src/migrations',
+    },
+  });
+
+  await conn.runMigrations();
 
   const app = express();
   const RedisStore = connectRedis(session);
-  const redis = new Redis();
+  const redis = new Redis(process.env.REDIS_URL);
+
+  app.set('trust proxy', 1);
 
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: process.env.CORS_ORIGIN,
       credentials: true,
     }),
   );
 
   app.use(
     session({
-      name: COOKIE_NAME,
+      name: process.env.COOKIE_NAME,
       store: new RedisStore({
         client: redis,
         disableTouch: true,
       }),
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
+        maxAge: parseInt(process.env.COOKIE_MAX_AGE),
         httpOnly: true,
         sameSite: 'lax',
         secure: __prod__,
+        domain: __prod__ ? '.notreddit.website' : undefined,
       },
       saveUninitialized: false,
-      secret: 'aosdijaosidjasodij',
+      secret: process.env.COOKIE_SECRET,
       resave: false,
     }),
   );
@@ -59,8 +74,8 @@ const main = async () => {
     cors: false,
   });
 
-  app.listen(4000, () => {
-    console.log('server started on port 4000');
+  app.listen(parseInt(process.env.PORT), () => {
+    console.log(`Server started on port ${process.env.PORT}`);
   });
 };
 
