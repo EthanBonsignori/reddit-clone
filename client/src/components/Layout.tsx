@@ -1,4 +1,4 @@
-import { Navbar } from './Navbar';
+import Navbar from './Navbar';
 import { Wrapper } from './Wrapper';
 
 interface LayoutProps {

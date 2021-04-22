@@ -9,7 +9,7 @@ interface LoggedInProps {
 
 const LoggedIn: React.FC<LoggedInProps> = ({ user }) => {
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
+  const [logout, { loading: logoutFetching }] = useLogoutMutation();
   return (
     <Flex flexDirection='row' alignItems='center' flexGrow={0}>
       <Button

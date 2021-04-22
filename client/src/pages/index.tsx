@@ -2,13 +2,11 @@ import { Button } from '@chakra-ui/button';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Box, Flex, Heading, Link, Stack, Text } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
-import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useState } from 'react';
-import { Navbar } from '../components/Navbar';
+import Navbar from '../components/Navbar';
 import VoteSection from '../components/post/VoteSection';
 import { usePostsQuery } from '../generated/graphql';
-import { createUrqlClient } from '../utils/createUrqlClient';
 
 const Index: React.FC = () => {
   const color = useColorModeValue('lightText', 'darkText');
@@ -19,11 +17,11 @@ const Index: React.FC = () => {
     limit: 15,
     cursor: null as null | string,
   });
-  const [{ data, fetching }] = usePostsQuery({
+  const { data, loading } = usePostsQuery({
     variables: queryVars,
   });
 
-  if (!fetching && !data) {
+  if (!loading && !data) {
     // TODO: error banner
     // return <div>Could not get posts</div>;
   }
@@ -49,7 +47,7 @@ const Index: React.FC = () => {
           </Link>
         </NextLink>
       </Flex>
-      {!data && fetching ? (
+      {!data && loading ? (
         <Box my='2em !important'>
           <Spinner color={color} size='xl' />
         </Box>
@@ -88,7 +86,7 @@ const Index: React.FC = () => {
       )}
       {data && data.posts.hasMore && (
         <Button
-          isLoading={fetching}
+          isLoading={loading}
           m='auto'
           mt={5}
           onClick={() => {
@@ -104,4 +102,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Index);
+export default Index;

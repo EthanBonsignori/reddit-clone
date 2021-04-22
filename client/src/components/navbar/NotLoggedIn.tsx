@@ -56,7 +56,7 @@ const NotLoggedIn: React.FC<NotLoggedInProps> = () => {
         }}>
         <TriangleDownIcon color={iconColor} />
       </Button>
-      <DropdownMenu />
+      <DropdownMenu loggedIn={false} />
     </Flex>
   );
 };

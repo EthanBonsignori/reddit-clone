@@ -7,7 +7,7 @@ import NotLoggedIn from './navbar/NotLoggedIn';
 import LoggedIn from './navbar/LoggedIn';
 import { isServer } from '../utils/isServer';
 
-export const Navbar: React.FC = () => {
+const Navbar: React.FC = () => {
   const { colorMode } = useColorMode();
   const color = useColorModeValue('lightText', 'darkText');
   const navBg = useColorModeValue('lightNavBg', 'darkNavBg');
@@ -16,13 +16,13 @@ export const Navbar: React.FC = () => {
   const navBorder = useColorModeValue('#edeff1', '#343536');
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
 
-  const [{ data, fetching }] = useMeQuery({
-    pause: isServer(),
+  const { data, loading } = useMeQuery({
+    skip: isServer(),
   });
 
   let menu = <NotLoggedIn />;
   // loading
-  if (fetching) {
+  if (loading) {
     // User not logged in
   } else if (!data?.me) {
     menu = <NotLoggedIn />;
@@ -100,3 +100,5 @@ export const Navbar: React.FC = () => {
     </>
   );
 };
+
+export default Navbar;
