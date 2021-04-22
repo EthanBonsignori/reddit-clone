@@ -21,6 +21,8 @@ const theme = extendTheme({
     white: '#ffffff',
     mainOrange: '#ff4500',
     mainBlue: '#0079d3',
+    upvoteOrange: '#cc3700',
+    downvoteBlue: '#5a75cc',
 
     // light
     lightText: '#222222',
