@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { InputHTMLAttributes } from 'react';
 import {
   FormControl,
@@ -20,13 +21,15 @@ export const InputField: React.FC<InputFieldProps> = ({
   textarea,
   ...props
 }) => {
-  let InputOrTextarea = Input;
-  if (textarea) InputOrTextarea = Textarea;
   const [field, { error }] = useField(props);
   return (
     <FormControl isInvalid={!!error}>
       <FormLabel htmlFor={field.name}>{label}</FormLabel>
-      <InputOrTextarea {...field} {...props} id={field.name} />
+      {textarea ? (
+        <Input as={Textarea} {...field} {...props} id={field.name} />
+      ) : (
+        <Input {...field} {...props} id={field.name} />
+      )}
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
     </FormControl>
   );
