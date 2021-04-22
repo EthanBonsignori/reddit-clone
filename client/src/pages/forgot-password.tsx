@@ -1,14 +1,12 @@
 import { InfoIcon, LinkIcon } from '@chakra-ui/icons';
 import { Button, Flex, Link } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useState } from 'react';
 import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useForgotPasswordMutation } from '../generated/graphql';
-import { createUrqlClient } from '../utils/createUrqlClient';
 
 interface FormValues {
   email: string;
@@ -16,10 +14,10 @@ interface FormValues {
 
 const ForgotPassword: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);
-  const [, forgotPassword] = useForgotPasswordMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
 
   const handleSubmit = async (values: FormValues) => {
-    await forgotPassword(values);
+    await forgotPassword({ variables: values });
     return setIsComplete(true);
   };
 
@@ -87,4 +85,4 @@ const ForgotPassword: React.FC = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(ForgotPassword);
+export default ForgotPassword;

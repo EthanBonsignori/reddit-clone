@@ -1,14 +1,12 @@
 import { CloseIcon, WarningIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Link } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { InputField } from '../../components/InputField';
 import Layout from '../../components/Layout';
 import { useChangePasswordMutation } from '../../generated/graphql';
-import { createUrqlClient } from '../../utils/createUrqlClient';
 import { toErrorMap } from '../../utils/toErrorMap';
 
 interface FormValues {
@@ -18,7 +16,7 @@ interface FormValues {
 
 const ResetPassword: React.FC = () => {
   const [apiError, setApiError] = useState('');
-  const [, changePassword] = useChangePasswordMutation();
+  const [changePassword] = useChangePasswordMutation();
   const router = useRouter();
   const token =
     typeof router.query?.token === 'string' ? router.query.token : '';
@@ -28,9 +26,11 @@ const ResetPassword: React.FC = () => {
     { setErrors }: FormikHelpers<FormValues>,
   ) => {
     const response = await changePassword({
-      token,
-      password: values.password,
-      passwordRepeat: values.passwordRepeat,
+      variables: {
+        token,
+        password: values.password,
+        passwordRepeat: values.passwordRepeat,
+      },
     });
 
     if (response.data?.changePassword.errors) {
@@ -108,4 +108,4 @@ const ResetPassword: React.FC = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(ResetPassword);
+export default ResetPassword;

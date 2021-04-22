@@ -18,13 +18,13 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
     'rgba(26, 26, 27, 0.1)',
     'rgba(215, 218, 220, 0.1)',
   );
-  const [, vote] = useVoteMutation();
+  const [vote] = useVoteMutation();
 
   const handleVote = (value: number) => {
     if (value === post.voteStatus) {
       return;
     }
-    vote({ postId: post.id, value });
+    vote({ variables: { postId: post.id, value } });
   };
 
   const isUpvoted = post.voteStatus === 1;

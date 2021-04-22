@@ -1,14 +1,12 @@
 import { LinkIcon } from '@chakra-ui/icons';
 import { Box, Button, Link } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useLoginMutation } from '../generated/graphql';
-import { createUrqlClient } from '../utils/createUrqlClient';
 import { toErrorMap } from '../utils/toErrorMap';
 
 interface FormValues {
@@ -18,13 +16,13 @@ interface FormValues {
 
 const Login: React.FC = () => {
   const router = useRouter();
-  const [, login] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const handleSubmit = async (
     values: FormValues,
     { setErrors }: FormikHelpers<FormValues>,
   ) => {
-    const response = await login(values);
+    const response = await login({ variables: values });
     if (response.data?.login.errors) {
       return setErrors(toErrorMap(response.data.login.errors));
     } else if (response.data?.login.user) {
@@ -87,4 +85,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(Login);
+export default Login;

@@ -1,12 +1,9 @@
-import { withUrqlClient } from "next-urql";
-import { useRouter } from "next/router";
-import { createUrqlClient } from "../../utils/createUrqlClient";
+import { useRouter } from 'next/router';
 
-
-const Post = () => {
+const Post: React.FC = () => {
   const router = useRouter();
-  router.query.id
-    return ();
-}
+  const { id } = router.query;
+  return <div>{id}</div>;
+};
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Post);
+export default Post;

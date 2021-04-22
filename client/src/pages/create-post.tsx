@@ -1,7 +1,6 @@
 import { CloseIcon, WarningIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Link } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -9,7 +8,6 @@ import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useCreatePostMutation } from '../generated/graphql';
 import { useIsAuth } from '../hooks/useIsAuth';
-import { createUrqlClient } from '../utils/createUrqlClient';
 
 interface FormValues {
   title: string;
@@ -20,15 +18,15 @@ const CreatePost: React.FC = () => {
   useIsAuth();
   const router = useRouter();
   const [apiError, setApiError] = useState('');
-  const [, createPost] = useCreatePostMutation();
+  const [createPost] = useCreatePostMutation();
 
   const handleSubmit = async (
     values: FormValues,
     // { setErrors }: FormikHelpers<FormValues>,
   ) => {
-    const response = await createPost({ input: values });
-    if (response?.error) {
-      return setApiError(response.error.message);
+    const { errors } = await createPost({ variables: { input: values } });
+    if (errors) {
+      return setApiError(errors[0].message);
     }
     router.push('/');
   };
@@ -93,4 +91,4 @@ const CreatePost: React.FC = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(CreatePost);
+export default CreatePost;

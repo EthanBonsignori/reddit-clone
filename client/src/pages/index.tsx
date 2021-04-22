@@ -3,22 +3,21 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Box, Flex, Heading, Link, Stack, Text } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
 import NextLink from 'next/link';
-import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import VoteSection from '../components/post/VoteSection';
-import { usePostsQuery } from '../generated/graphql';
+import { PostsQuery, usePostsQuery } from '../generated/graphql';
 
 const Index: React.FC = () => {
   const color = useColorModeValue('lightText', 'darkText');
   const bg = useColorModeValue('lightBg', 'darkBg');
   const postBg = useColorModeValue('lightNavBg', 'darkNavBg');
 
-  const [queryVars, setQueryVars] = useState({
-    limit: 15,
-    cursor: null as null | string,
-  });
-  const { data, loading } = usePostsQuery({
-    variables: queryVars,
+  const { data, loading, variables, fetchMore } = usePostsQuery({
+    variables: {
+      limit: 15,
+      cursor: null,
+    },
+    notifyOnNetworkStatusChange: true,
   });
 
   if (!loading && !data) {
@@ -90,9 +89,27 @@ const Index: React.FC = () => {
           m='auto'
           mt={5}
           onClick={() => {
-            setQueryVars({
-              limit: queryVars.limit,
-              cursor: data.posts.posts[data.posts.posts.length - 1].createdAt,
+            fetchMore({
+              variables: {
+                limit: variables?.limit,
+                cursor: data.posts.posts[data.posts.posts.length - 1].createdAt,
+              },
+              // updateQuery: (previousValue, { fetchMoreResult }): PostsQuery => {
+              //   if (!fetchMoreResult) {
+              //     return previousValue as PostsQuery;
+              //   }
+              //   return {
+              //     __typename: 'Query',
+              //     posts: {
+              //       __typename: 'PaginatedPosts',
+              //       hasMore: (fetchMoreResult as PostsQuery).posts.hasMore,
+              //       posts: [
+              //         ...(previousValue as PostsQuery).posts.posts,
+              //         ...(fetchMoreResult as PostsQuery).posts.posts,
+              //       ],
+              //     },
+              //   };
+              // },
             });
           }}>
           Load More

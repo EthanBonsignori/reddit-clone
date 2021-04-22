@@ -6,6 +6,7 @@ import { Box, Heading, Link } from '@chakra-ui/layout';
 import { Switch } from '@chakra-ui/switch';
 import { useLogoutMutation } from '../../generated/graphql';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { useApolloClient } from '@apollo/client';
 
 interface DropdownMenuProps {
   loggedIn: boolean;
@@ -22,10 +23,15 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ loggedIn }) => {
   const buttonHoverBg = useColorModeValue('lightButtonBg', 'darkButtonBg');
   const buttonHoverColor = useColorModeValue('#ffffff', '#1c1c1c');
 
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
+  const [logout, { loading: logoutLoading }] = useLogoutMutation();
+  const apolloClient = useApolloClient();
+
+  const handleLogout = async () => {
+    await logout();
+    await apolloClient.resetStore();
+  };
 
   const toggleColor = (evt: React.MouseEvent) => {
-    console.log(evt);
     evt.stopPropagation();
     toggleColorMode();
   };
@@ -361,9 +367,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ loggedIn }) => {
             _focus={{
               boxShadow: 'none',
             }}
-            disabled={logoutFetching}
-            isLoading={logoutFetching}
-            onClick={() => logout()}>
+            disabled={logoutLoading}
+            isLoading={logoutLoading}
+            onClick={handleLogout}>
             Log Out
           </Button>
         ) : (

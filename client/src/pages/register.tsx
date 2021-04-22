@@ -1,14 +1,12 @@
 import { LinkIcon } from '@chakra-ui/icons';
 import { Box, Button, Link } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useRegisterMutation } from '../generated/graphql';
-import { createUrqlClient } from '../utils/createUrqlClient';
 import { toErrorMap } from '../utils/toErrorMap';
 
 interface FormValues {
@@ -20,13 +18,13 @@ interface FormValues {
 
 const Register: React.FC = () => {
   const router = useRouter();
-  const [, register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const handleSubmit = async (
     values: FormValues,
     { setErrors }: FormikHelpers<FormValues>,
   ) => {
-    const response = await register({ options: values });
+    const response = await register({ variables: { options: values } });
     console.log(response);
     if (response.data?.register.errors) {
       setErrors(toErrorMap(response.data.register.errors));
@@ -100,4 +98,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(Register);
+export default Register;
