@@ -163,6 +163,7 @@ export class UserResolver {
     try {
       await sendEmail(
         email,
+        // TODO: change in prod
         `Click here to <a href='http://localhost:3000/reset-password/${token}'>reset your password</a>.`,
       );
       return true;
