@@ -56,7 +56,7 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
         fontWeight='700'
         lineHeight='16px'
         pointerEvents='none'
-        color={isUpvoted ? 'upvoteOrange' : 'downvoteBlue'}>
+        color={isUpvoted ? 'upvoteOrange' : isDownvoted ? 'downvoteBlue' : ''}>
         {post.points}
       </Text>
       <IconButton
