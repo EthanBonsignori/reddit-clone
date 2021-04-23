@@ -1,3 +1,4 @@
+import { ApolloCache } from '@apollo/client';
 import {
   Flex,
   Icon,
@@ -5,12 +6,57 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import gql from 'graphql-tag';
 import { ImArrowDown, ImArrowUp } from 'react-icons/im';
-import { PostSnippetFragment, useVoteMutation } from '../../generated/graphql';
+import {
+  PostSnippetFragment,
+  useVoteMutation,
+  VoteMutation,
+} from '../../generated/graphql';
 
 interface VoteSectionProps {
   post: PostSnippetFragment;
 }
+
+const updateAfterVote = (
+  value: number,
+  postId: number,
+  cache: ApolloCache<VoteMutation>,
+) => {
+  const data = cache.readFragment<{
+    id: number;
+    points: number;
+    voteStatus: number | null;
+  }>({
+    id: `Post:${postId}`,
+    fragment: gql`
+      fragment __ on Post {
+        id
+        points
+        voteStatus
+      }
+    `,
+  });
+
+  if (data) {
+    if (data.voteStatus === value) {
+      return;
+    }
+    const newPoints =
+      (data.points as number) + (!data.voteStatus ? 1 : 2) * value;
+    console.log(newPoints);
+    cache.writeFragment({
+      id: `Post:${postId}`,
+      fragment: gql`
+        fragment _ on Post {
+          points
+          voteStatus
+        }
+      `,
+      data: { id: postId, points: newPoints, voteStatus: value },
+    });
+  }
+};
 
 const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
@@ -24,7 +70,13 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
     if (value === post.voteStatus) {
       return;
     }
-    vote({ variables: { postId: post.id, value } });
+    vote({
+      variables: {
+        postId: post.id,
+        value,
+      },
+      update: (cache) => updateAfterVote(value, post.id, cache),
+    });
   };
 
   const isUpvoted = post.voteStatus === 1;

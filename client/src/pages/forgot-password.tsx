@@ -7,6 +7,7 @@ import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useForgotPasswordMutation } from '../generated/graphql';
+import withApollo from '../utils/withApollo';
 
 interface FormValues {
   email: string;
@@ -85,4 +86,4 @@ const ForgotPassword: React.FC = () => {
   );
 };
 
-export default ForgotPassword;
+export default withApollo({ ssr: false })(ForgotPassword);

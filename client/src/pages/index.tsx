@@ -5,7 +5,8 @@ import { Spinner } from '@chakra-ui/spinner';
 import NextLink from 'next/link';
 import Navbar from '../components/Navbar';
 import VoteSection from '../components/post/VoteSection';
-import { PostsQuery, usePostsQuery } from '../generated/graphql';
+import { usePostsQuery } from '../generated/graphql';
+import withApollo from '../utils/withApollo';
 
 const Index: React.FC = () => {
   const color = useColorModeValue('lightText', 'darkText');
@@ -119,4 +120,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default withApollo({ ssr: true })(Index);

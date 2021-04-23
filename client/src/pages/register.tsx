@@ -8,6 +8,7 @@ import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useRegisterMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
+import withApollo from '../utils/withApollo';
 
 interface FormValues {
   email: string;
@@ -98,4 +99,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default withApollo({ ssr: false })(Register);

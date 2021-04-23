@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import withApollo from '../../utils/withApollo';
 
 const Post: React.FC = () => {
   const router = useRouter();
@@ -6,4 +7,4 @@ const Post: React.FC = () => {
   return <div>{id}</div>;
 };
 
-export default Post;
+export default withApollo({ ssr: true })(Post);

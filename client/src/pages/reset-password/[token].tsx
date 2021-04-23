@@ -8,6 +8,7 @@ import { InputField } from '../../components/InputField';
 import Layout from '../../components/Layout';
 import { useChangePasswordMutation } from '../../generated/graphql';
 import { toErrorMap } from '../../utils/toErrorMap';
+import withApollo from '../../utils/withApollo';
 
 interface FormValues {
   password: string;
@@ -108,4 +109,4 @@ const ResetPassword: React.FC = () => {
   );
 };
 
-export default ResetPassword;
+export default withApollo({ ssr: false })(ResetPassword);
