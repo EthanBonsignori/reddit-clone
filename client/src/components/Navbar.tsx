@@ -6,6 +6,13 @@ import { useMeQuery } from '../generated/graphql';
 import NotLoggedIn from './navbar/NotLoggedIn';
 import LoggedIn from './navbar/LoggedIn';
 import { isServer } from '../utils/isServer';
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 const Navbar: React.FC = () => {
   const { colorMode } = useColorMode();
@@ -16,20 +23,39 @@ const Navbar: React.FC = () => {
   const navBorder = useColorModeValue('#edeff1', '#343536');
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
 
-  const { data, loading } = useMeQuery({
+  const { data } = useMeQuery({
     skip: isServer(),
   });
 
-  let menu = <NotLoggedIn />;
-  // loading
-  if (loading) {
-    // User not logged in
-  } else if (!data?.me) {
-    menu = <NotLoggedIn />;
-    // User logged in
-  } else {
-    menu = <LoggedIn user={data.me} />;
-  }
+  const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const dropdownRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const dropdownButtonRef = useRef() as MutableRefObject<HTMLButtonElement>;
+
+  const toggleDropdown: any = (value: boolean) => {
+    if (value !== null) {
+      return setDropdownIsOpen(value);
+    }
+    return useCallback(() => setDropdownIsOpen, [
+      dropdownIsOpen,
+      setDropdownIsOpen,
+    ]);
+  };
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (event.target === dropdownButtonRef.current) {
+      return null;
+    }
+    if (!dropdownRef.current.contains(event.target as Node)) {
+      return toggleDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
@@ -69,7 +95,7 @@ const Navbar: React.FC = () => {
               display='inline-flex'
               alignItems='center'
               flexDirection='row'>
-              reddit
+              notReddit
             </Box>
             {/* Search Bar */}
             <Box maxW='690px' margin='0 auto' flexGrow={1}>
@@ -94,7 +120,22 @@ const Navbar: React.FC = () => {
               </InputGroup>
             </Box>
           </Flex>
-          {menu}
+          {!data?.me ? (
+            <NotLoggedIn
+              dropdownRef={dropdownRef}
+              dropdownButtonRef={dropdownButtonRef}
+              dropdownIsOpen={dropdownIsOpen}
+              toggleDropdown={toggleDropdown}
+            />
+          ) : (
+            <LoggedIn
+              user={data.me}
+              dropdownRef={dropdownRef}
+              dropdownButtonRef={dropdownButtonRef}
+              dropdownIsOpen={dropdownIsOpen}
+              toggleDropdown={toggleDropdown}
+            />
+          )}
         </Flex>
       </Flex>
     </>

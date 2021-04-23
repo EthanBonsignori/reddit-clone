@@ -1,13 +1,23 @@
-import NextLink from 'next/link';
-import { Box, Flex, Link } from '@chakra-ui/layout';
 import { TriangleDownIcon } from '@chakra-ui/icons';
+import { Box, Flex, Link } from '@chakra-ui/layout';
 import { Button, useColorModeValue } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import MainButton from '../MainButton';
 import DropdownMenu from './DropdownMenu';
 
-interface NotLoggedInProps {}
+interface NotLoggedInProps {
+  dropdownIsOpen: boolean;
+  dropdownRef: React.MutableRefObject<HTMLDivElement>;
+  dropdownButtonRef: React.MutableRefObject<HTMLButtonElement>;
+  toggleDropdown: React.MouseEventHandler<HTMLButtonElement>;
+}
 
-const NotLoggedIn: React.FC<NotLoggedInProps> = () => {
+const NotLoggedIn: React.FC<NotLoggedInProps> = ({
+  dropdownIsOpen,
+  dropdownRef,
+  dropdownButtonRef,
+  toggleDropdown,
+}) => {
   const buttonBg = useColorModeValue('lightButtonBg', 'darkButtonBg');
   const navBg = useColorModeValue('lightNavBg', 'darkNavBg');
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
@@ -42,6 +52,8 @@ const NotLoggedIn: React.FC<NotLoggedInProps> = () => {
         </NextLink>
       </Box>
       <Button
+        ref={dropdownButtonRef}
+        onClick={toggleDropdown}
         width='70px'
         minH='32px'
         ml='8px'
@@ -54,9 +66,13 @@ const NotLoggedIn: React.FC<NotLoggedInProps> = () => {
         _focus={{
           outline: 'none',
         }}>
-        <TriangleDownIcon color={iconColor} />
+        <TriangleDownIcon color={iconColor} pointerEvents='none' />
       </Button>
-      <DropdownMenu loggedIn={false} />
+      <DropdownMenu
+        loggedIn={false}
+        dropdownRef={dropdownRef}
+        dropdownIsOpen={dropdownIsOpen}
+      />
     </Flex>
   );
 };

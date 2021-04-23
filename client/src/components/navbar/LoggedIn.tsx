@@ -1,19 +1,30 @@
 import { TriangleDownIcon } from '@chakra-ui/icons';
-import { Flex, Button, useColorModeValue } from '@chakra-ui/react';
-import DropdownMenu from './DropdownMenu';
+import { Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useLogoutMutation } from '../../generated/graphql';
+import DropdownMenu from './DropdownMenu';
 
 interface LoggedInProps {
   user: Record<string, unknown>;
+  dropdownRef: React.MutableRefObject<HTMLDivElement>;
+  dropdownButtonRef: React.MutableRefObject<HTMLButtonElement>;
+  dropdownIsOpen: boolean;
+  toggleDropdown: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const LoggedIn: React.FC<LoggedInProps> = ({ user }) => {
+const LoggedIn: React.FC<LoggedInProps> = ({
+  user,
+  dropdownRef,
+  dropdownButtonRef,
+  dropdownIsOpen,
+  toggleDropdown,
+}) => {
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   return (
     <Flex flexDirection='row' alignItems='center' flexGrow={0}>
       <Button
-        width='70px'
+        ref={dropdownButtonRef}
+        onClick={toggleDropdown}
         minH='32px'
         ml='8px'
         outline='none'
@@ -26,7 +37,7 @@ const LoggedIn: React.FC<LoggedInProps> = ({ user }) => {
           outline: 'none',
         }}>
         {user.username}
-        <TriangleDownIcon color={iconColor} />
+        <TriangleDownIcon color={iconColor} pointerEvents='none' />
       </Button>
       <Button
         onClick={() => logout()}
@@ -34,7 +45,11 @@ const LoggedIn: React.FC<LoggedInProps> = ({ user }) => {
         isLoading={logoutFetching}>
         Logout
       </Button>
-      <DropdownMenu loggedIn={true} />
+      <DropdownMenu
+        loggedIn={true}
+        dropdownRef={dropdownRef}
+        dropdownIsOpen={dropdownIsOpen}
+      />
     </Flex>
   );
 };
