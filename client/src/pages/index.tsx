@@ -40,7 +40,7 @@ const Index: React.FC = () => {
         justifyContent='space-between'
         mb='1rem !important'
         width='55%'>
-        <Heading>cReddit</Heading>
+        <Heading>notReddit</Heading>
         <NextLink href='/create-post' passHref>
           <Link ml={10} as={Button}>
             Create Post
