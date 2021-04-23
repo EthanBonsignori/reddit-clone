@@ -15,6 +15,7 @@ import {
 import { getConnection } from 'typeorm';
 import { Post } from '../entities/Post';
 import { Upvote } from '../entities/Upvote';
+import { User } from '../entities/User';
 import { isAuth } from '../middleware/isAuth';
 import { MyContext } from '../types';
 import { FieldError } from '../utils/FieldError';
@@ -54,6 +55,28 @@ export class PostResolver {
     return root.text.slice(0, 50);
   }
 
+  @FieldResolver(() => User)
+  async creator(@Root() post: Post, @Ctx() { userLoader }: MyContext) {
+    return await userLoader.load(post.creatorId);
+  }
+
+  @FieldResolver(() => Int, { nullable: true })
+  async voteStatus(
+    @Root() post: Post,
+    @Ctx() { upvoteLoader, req }: MyContext,
+  ) {
+    if (!req.session.userId) {
+      return null;
+    }
+
+    const upvote = await upvoteLoader.load({
+      postId: post.id,
+      userId: req.session.userId,
+    });
+
+    return upvote ? upvote.value : null;
+  }
+
   @Query(() => PaginatedPosts)
   async posts(
     @Arg('limit', () => Int) limit: number,
@@ -78,17 +101,12 @@ export class PostResolver {
     const posts = await getConnection().query(
       `
       SELECT p.*,
-      json_build_object(
-        'id', u.id,
-        'username', u.username
-      ) creator,
       ${
         req.session.userId
           ? '(SELECT VALUE FROM upvote WHERE "userId" = $2 AND "postId" = p.id) "voteStatus"'
           : 'null AS "voteStatus"'
       }
       FROM post p
-      INNER JOIN public.user u ON u.id = p."creatorId"
       ${cursor ? `WHERE p."createdAt" < $${cursorIdx}` : ''}
       ORDER BY p."createdAt" DESC
       LIMIT $1
