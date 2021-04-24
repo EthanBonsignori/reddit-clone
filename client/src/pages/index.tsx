@@ -1,17 +1,16 @@
 import { Button } from '@chakra-ui/button';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import { Box, Flex, Heading, Link, Stack, Text } from '@chakra-ui/layout';
+import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
 import NextLink from 'next/link';
 import Navbar from '../components/Navbar';
-import VoteSection from '../components/post/VoteSection';
+import Post from '../components/Post';
 import { usePostsQuery } from '../generated/graphql';
 import withApollo from '../utils/withApollo';
 
 const Index: React.FC = () => {
   const color = useColorModeValue('lightText', 'darkText');
   const bg = useColorModeValue('lightBg', 'darkBg');
-  const postBg = useColorModeValue('lightNavBg', 'darkNavBg');
 
   const { data, loading, variables, fetchMore } = usePostsQuery({
     variables: {
@@ -52,37 +51,11 @@ const Index: React.FC = () => {
           <Spinner color={color} size='xl' />
         </Box>
       ) : (
-        <Stack spacing={4}>
+        <Box>
           {data?.posts.posts.map((post) => (
-            <Flex
-              flexDir='column'
-              p={5}
-              shadow='md'
-              key={post.id}
-              borderWidth='1px'
-              borderColor='transparent'
-              bg={postBg}
-              minW='580px'
-              color={color}>
-              <Flex flexDir='row'>
-                <VoteSection post={post} />
-                <Flex flexDir='column' ml={6}>
-                  <Flex flexDir='row'>
-                    <Heading fontSize='xl' color={color}>
-                      {post.title}
-                    </Heading>
-                    <Text color={color} opacity='0.8' ml={4}>
-                      Posted by u/{post.creator.username}
-                    </Text>
-                  </Flex>
-                  <Box mt={4}>
-                    <Text color={color}>{post.textSnippet}</Text>
-                  </Box>
-                </Flex>
-              </Flex>
-            </Flex>
+            <Post key={post.id} post={post} />
           ))}
-        </Stack>
+        </Box>
       )}
       {data && data.posts.hasMore && (
         <Button
