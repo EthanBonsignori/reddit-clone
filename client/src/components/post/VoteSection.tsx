@@ -82,7 +82,15 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
   const isUpvoted = post.voteStatus === 1;
   const isDownvoted = post.voteStatus === -1;
   return (
-    <Flex flexDir='column' align='center'>
+    <Flex
+      flexDir='column'
+      align='center'
+      w='40px'
+      borderLeft='4px solid transparent'
+      pos='absolute'
+      top={0}
+      left={0}
+      p='8px 4px 8px 0'>
       <IconButton
         aria-label='Upvote Post'
         bg={isUpvoted ? iconBg : 'none'}
