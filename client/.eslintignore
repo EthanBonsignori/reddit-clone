@@ -1,3 +1,5 @@
 .next
+.vercel
 node_modules
 generated
+graphql.tsx
