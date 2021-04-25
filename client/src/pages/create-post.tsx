@@ -25,7 +25,12 @@ const CreatePost: React.FC = () => {
     values: FormValues,
     // { setErrors }: FormikHelpers<FormValues>,
   ) => {
-    const { errors } = await createPost({ variables: { input: values } });
+    const { errors } = await createPost({
+      variables: { input: values },
+      update: (cache) => {
+        cache.evict({ fieldName: 'posts' });
+      },
+    });
     if (errors) {
       return setApiError(errors[0].message);
     }
