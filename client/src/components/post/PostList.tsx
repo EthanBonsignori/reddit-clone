@@ -1,10 +1,4 @@
-import {
-  Box,
-  Spinner,
-  color,
-  Button,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Spinner, Button, useColorModeValue } from '@chakra-ui/react';
 import { usePostsQuery } from '../../generated/graphql';
 import Post from './Post';
 
@@ -12,7 +6,6 @@ interface PostListProps {}
 
 const PostList: React.FC<PostListProps> = () => {
   const color = useColorModeValue('lightText', 'darkText');
-  const bg = useColorModeValue('lightBg', 'darkBg');
 
   const { data, loading, variables, fetchMore } = usePostsQuery({
     variables: {
