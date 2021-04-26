@@ -50,11 +50,6 @@ class PostResponse {
 
 @Resolver(Post)
 export class PostResolver {
-  @FieldResolver(() => String)
-  textSnippet(@Root() root: Post) {
-    return root.text.slice(0, 50);
-  }
-
   @FieldResolver(() => User)
   async creator(@Root() post: Post, @Ctx() { userLoader }: MyContext) {
     return await userLoader.load(post.creatorId);
