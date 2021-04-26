@@ -1,7 +1,7 @@
-fragment PostSnippet on Post {
+fragment RegularPost on Post {
   id
   title
-  textSnippet
+  text
   points
   voteStatus
   creatorId
