@@ -7,6 +7,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import gql from 'graphql-tag';
+import { MouseEvent } from 'react';
 import { ImArrowDown, ImArrowUp } from 'react-icons/im';
 import {
   RegularPostFragment,
@@ -65,7 +66,8 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
   );
   const [vote] = useVoteMutation();
 
-  const handleVote = (value: number) => {
+  const handleVote = (event: MouseEvent, value: number) => {
+    event.preventDefault();
     if (value === post.voteStatus) {
       return;
     }
@@ -107,7 +109,7 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
         _focus={{
           outline: 'none',
         }}
-        onClick={() => handleVote(1)}
+        onClick={(event) => handleVote(event, 1)}
         icon={<Icon as={ImArrowUp} w={4} h={4} />}
       />
       <Text
@@ -135,7 +137,7 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
         _focus={{
           outline: 'none',
         }}
-        onClick={() => handleVote(-1)}
+        onClick={(event) => handleVote(event, -1)}
         icon={<Icon as={ImArrowDown} w={4} h={4} />}
       />
     </Flex>
