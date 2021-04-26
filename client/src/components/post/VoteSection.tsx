@@ -9,13 +9,13 @@ import {
 import gql from 'graphql-tag';
 import { ImArrowDown, ImArrowUp } from 'react-icons/im';
 import {
-  PostSnippetFragment,
+  RegularPostFragment,
   useVoteMutation,
   VoteMutation,
 } from '../../generated/graphql';
 
 interface VoteSectionProps {
-  post: PostSnippetFragment;
+  post: RegularPostFragment;
 }
 
 const updateAfterVote = (
