@@ -1,29 +1,14 @@
 import { Button } from '@chakra-ui/button';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/layout';
-import { Spinner } from '@chakra-ui/spinner';
+import { Flex, Heading, Link, Stack } from '@chakra-ui/layout';
 import NextLink from 'next/link';
-import Navbar from '../components/Navbar';
-import Post from '../components/Post';
-import { usePostsQuery } from '../generated/graphql';
+import Navbar from '../components/navbar/Navbar';
+import PostList from '../components/post/PostList';
 import withApollo from '../utils/withApollo';
 
 const Index: React.FC = () => {
   const color = useColorModeValue('lightText', 'darkText');
   const bg = useColorModeValue('lightBg', 'darkBg');
-
-  const { data, loading, variables, fetchMore } = usePostsQuery({
-    variables: {
-      limit: 15,
-      cursor: null,
-    },
-    notifyOnNetworkStatusChange: true,
-  });
-
-  if (!loading && !data) {
-    // TODO: error banner
-    // return <div>Could not get posts</div>;
-  }
 
   return (
     <Stack
@@ -46,33 +31,7 @@ const Index: React.FC = () => {
           </Link>
         </NextLink>
       </Flex>
-      {!data && loading ? (
-        <Box my='2em !important'>
-          <Spinner color={color} size='xl' />
-        </Box>
-      ) : (
-        <Box>
-          {data?.posts.posts.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
-        </Box>
-      )}
-      {data && data.posts.hasMore && (
-        <Button
-          isLoading={loading}
-          m='auto'
-          mt={5}
-          onClick={() => {
-            fetchMore({
-              variables: {
-                limit: variables?.limit,
-                cursor: data.posts.posts[data.posts.posts.length - 1].createdAt,
-              },
-            });
-          }}>
-          Load More
-        </Button>
-      )}
+      <PostList />
     </Stack>
   );
 };
