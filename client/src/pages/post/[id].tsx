@@ -2,10 +2,11 @@ import { useColorModeValue } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/spinner';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
+import Post from '../../components/post/Post';
 import { usePostQuery } from '../../generated/graphql';
 import withApollo from '../../utils/withApollo';
 
-const Post: React.FC = () => {
+const PostById: React.FC = () => {
   const color = useColorModeValue('lightText', 'darkText');
 
   const router = useRouter();
@@ -26,7 +27,15 @@ const Post: React.FC = () => {
     );
   }
 
-  return <Layout wrapperSize='small'>{data?.post?.text}</Layout>;
+  if (!data?.post) {
+    return <Layout wrapperSize='small'>Could not find that Post.</Layout>;
+  }
+
+  return (
+    <Layout wrapperSize='small'>
+      <Post post={data?.post} />
+    </Layout>
+  );
 };
 
-export default withApollo({ ssr: true })(Post);
+export default withApollo({ ssr: true })(PostById);
