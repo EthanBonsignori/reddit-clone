@@ -52,7 +52,8 @@ class PostResponse {
 export class PostResolver {
   @FieldResolver(() => User)
   async creator(@Root() post: Post, @Ctx() { userLoader }: MyContext) {
-    return await userLoader.load(post.creatorId);
+    const creator = await userLoader.load(post.creatorId);
+    return creator;
   }
 
   @FieldResolver(() => Int, { nullable: true })
@@ -72,6 +73,12 @@ export class PostResolver {
     return upvote ? upvote.value : null;
   }
 
+  @Query(() => Post, { nullable: true })
+  async post(@Arg('id', () => Int) id: number): Promise<Post | undefined> {
+    const post = await Post.findOne(id);
+    return post;
+  }
+
   @Query(() => PaginatedPosts)
   async posts(
     @Arg('limit', () => Int) limit: number,
@@ -87,10 +94,10 @@ export class PostResolver {
       replacements.push(req.session.userId);
     }
 
-    let cursorIdx = 3;
+    let cursorIndex = 3;
     if (cursor) {
       replacements.push(new Date(parseInt(cursor)));
-      cursorIdx = replacements.length;
+      cursorIndex = replacements.length;
     }
 
     const posts = await getConnection().query(
@@ -102,7 +109,7 @@ export class PostResolver {
           : 'null AS "voteStatus"'
       }
       FROM post p
-      ${cursor ? `WHERE p."createdAt" < $${cursorIdx}` : ''}
+      ${cursor ? `WHERE p."createdAt" < $${cursorIndex}` : ''}
       ORDER BY p."createdAt" DESC
       LIMIT $1
     `,
@@ -113,11 +120,6 @@ export class PostResolver {
       posts: posts.slice(0, realLimit),
       hasMore: posts.length === realLimitPlusOne,
     };
-  }
-
-  @Query(() => Post, { nullable: true })
-  post(@Arg('id', () => Int) id: number): Promise<Post | undefined> {
-    return Post.findOne(id);
   }
 
   @Mutation(() => Boolean)
