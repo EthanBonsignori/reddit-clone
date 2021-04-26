@@ -111,20 +111,20 @@ export type PostResponse = {
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
-  posts: PaginatedPosts;
   post?: Maybe<Post>;
+  posts: PaginatedPosts;
   me?: Maybe<User>;
+};
+
+
+export type QueryPostArgs = {
+  id: Scalars['Int'];
 };
 
 
 export type QueryPostsArgs = {
   cursor?: Maybe<Scalars['String']>;
   limit: Scalars['Int'];
-};
-
-
-export type QueryPostArgs = {
-  id: Scalars['Int'];
 };
 
 export type User = {
