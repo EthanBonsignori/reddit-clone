@@ -95,7 +95,6 @@ export type Post = {
   creator: User;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
-  textSnippet: Scalars['String'];
 };
 
 export type PostInput = {
@@ -151,18 +150,18 @@ export type UsernamePasswordInput = {
   passwordRepeat: Scalars['String'];
 };
 
-export type PostSnippetFragment = (
+export type RegularErrorFragment = (
+  { __typename?: 'FieldError' }
+  & Pick<FieldError, 'field' | 'message'>
+);
+
+export type RegularPostFragment = (
   { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'title' | 'textSnippet' | 'points' | 'voteStatus' | 'creatorId' | 'createdAt' | 'updatedAt'>
+  & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'voteStatus' | 'creatorId' | 'createdAt' | 'updatedAt'>
   & { creator: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
   ) }
-);
-
-export type RegularErrorFragment = (
-  { __typename?: 'FieldError' }
-  & Pick<FieldError, 'field' | 'message'>
 );
 
 export type RegularUserFragment = (
@@ -291,11 +290,7 @@ export type PostQuery = (
   { __typename?: 'Query' }
   & { post?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'voteStatus' | 'creatorId' | 'createdAt' | 'updatedAt'>
-    & { creator: (
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
-    ) }
+    & RegularPostFragment
   )> }
 );
 
@@ -312,16 +307,16 @@ export type PostsQuery = (
     & Pick<PaginatedPosts, 'hasMore'>
     & { posts: Array<(
       { __typename?: 'Post' }
-      & PostSnippetFragment
+      & RegularPostFragment
     )> }
   ) }
 );
 
-export const PostSnippetFragmentDoc = gql`
-    fragment PostSnippet on Post {
+export const RegularPostFragmentDoc = gql`
+    fragment RegularPost on Post {
   id
   title
-  textSnippet
+  text
   points
   voteStatus
   creatorId
@@ -637,21 +632,10 @@ export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const PostDocument = gql`
     query Post($id: Int!) {
   post(id: $id) {
-    id
-    title
-    text
-    points
-    voteStatus
-    creatorId
-    createdAt
-    updatedAt
-    creator {
-      id
-      username
-    }
+    ...RegularPost
   }
 }
-    `;
+    ${RegularPostFragmentDoc}`;
 
 /**
  * __usePostQuery__
@@ -685,11 +669,11 @@ export const PostsDocument = gql`
   posts(limit: $limit, cursor: $cursor) {
     hasMore
     posts {
-      ...PostSnippet
+      ...RegularPost
     }
   }
 }
-    ${PostSnippetFragmentDoc}`;
+    ${RegularPostFragmentDoc}`;
 
 /**
  * __usePostsQuery__
