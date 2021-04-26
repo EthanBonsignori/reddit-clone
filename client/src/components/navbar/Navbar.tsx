@@ -1,11 +1,7 @@
-import { Box, Flex } from '@chakra-ui/layout';
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import { SearchIcon } from '@chakra-ui/icons';
-import { useMeQuery } from '../generated/graphql';
-import NotLoggedIn from './navbar/NotLoggedIn';
-import LoggedIn from './navbar/LoggedIn';
-import { isServer } from '../utils/isServer';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
+import { Box, Flex } from '@chakra-ui/layout';
 import {
   MutableRefObject,
   useCallback,
@@ -13,6 +9,10 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useMeQuery } from '../../generated/graphql';
+import { isServer } from '../../utils/isServer';
+import LoggedIn from './LoggedIn';
+import NotLoggedIn from './NotLoggedIn';
 
 const Navbar: React.FC = () => {
   const { colorMode } = useColorMode();
