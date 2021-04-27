@@ -1,8 +1,13 @@
 #!/bin/bash
 
-echo Enter Version Number
+PACKAGE_VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
 
+echo "Current Version: $PACKAGE_VERSION"
+
+echo "Enter Next Version Number"
 read VERSION
+
+npm version $VERSION
 
 docker build -t ethanbonsignori/notreddit:$VERSION .
 
