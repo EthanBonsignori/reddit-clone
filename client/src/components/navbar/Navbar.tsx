@@ -1,7 +1,7 @@
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
-import { Box, Flex } from '@chakra-ui/layout';
+import { Box, Flex, Link } from '@chakra-ui/layout';
 import {
   MutableRefObject,
   useCallback,
@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import NextLink from 'next/link';
 import { useMeQuery } from '../../generated/graphql';
 import { isServer } from '../../utils/isServer';
 import LoggedIn from './LoggedIn';
@@ -87,16 +88,22 @@ const Navbar: React.FC = () => {
             flexGrow={1}
             verticalAlign='baseline'>
             {/* Home Button */}
-            <Box
-              as='a'
-              href='/'
-              aria-label='home'
-              title='Home'
-              display='inline-flex'
-              alignItems='center'
-              flexDirection='row'>
-              notReddit
-            </Box>
+            <NextLink href='/' passHref>
+              <Link
+                aria-label='home'
+                title='Home'
+                display='inline-flex'
+                alignItems='center'
+                flexDirection='row'
+                _hover={{
+                  textDecoration: 'none',
+                }}
+                _focus={{
+                  outline: 'none',
+                }}>
+                notReddit
+              </Link>
+            </NextLink>
             {/* Search Bar */}
             <Box maxW='690px' margin='0 auto' flexGrow={1}>
               <InputGroup width='100%' flexGrow={1}>
