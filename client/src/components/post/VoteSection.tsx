@@ -59,6 +59,7 @@ const updateAfterVote = (
 };
 
 const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
+  const bg = useColorModeValue('#F8F9FA', '');
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
   const iconBg = useColorModeValue(
     'rgba(26, 26, 27, 0.1)',
@@ -84,10 +85,13 @@ const VoteSection: React.FC<VoteSectionProps> = ({ post }) => {
   const isDownvoted = post.voteStatus === -1;
   return (
     <Flex
+      bg={bg}
       flexDir='column'
       align='center'
       w='40px'
+      h='100%'
       borderLeft='4px solid transparent'
+      borderRadius='4px'
       pos='absolute'
       top={0}
       left={0}

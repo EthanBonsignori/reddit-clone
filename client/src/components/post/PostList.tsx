@@ -1,5 +1,6 @@
 import { Box, Spinner, Button, useColorModeValue } from '@chakra-ui/react';
 import { usePostsQuery } from '../../generated/graphql';
+import { Wrapper } from '../Wrapper';
 import Post from './Post';
 
 interface PostListProps {}
@@ -27,11 +28,13 @@ const PostList: React.FC<PostListProps> = () => {
           <Spinner color={color} size='xl' />
         </Box>
       ) : (
-        <Box>
-          {data?.posts.posts.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
-        </Box>
+        <Wrapper size='small'>
+          <Box>
+            {data?.posts.posts.map((post) => (
+              <Post key={post.id} post={post} single={false} />
+            ))}
+          </Box>
+        </Wrapper>
       )}
       {data && data.posts.hasMore && (
         <Button

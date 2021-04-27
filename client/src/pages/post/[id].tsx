@@ -37,7 +37,7 @@ const PostById: React.FC = () => {
 
   return (
     <Layout wrapperSize='small'>
-      <Post post={data?.post} />
+      <Post post={data?.post} single={true} />
     </Layout>
   );
 };
