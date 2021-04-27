@@ -12,7 +12,7 @@ const PostById: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const intId = typeof id === 'string' ? parseInt(id) : -1;
-  const { data, loading } = usePostQuery({
+  const { data, loading, error } = usePostQuery({
     skip: intId === -1,
     variables: {
       id: intId,
@@ -25,6 +25,10 @@ const PostById: React.FC = () => {
         <Spinner color={color} size='xl' />
       </Layout>
     );
+  }
+
+  if (error) {
+    return <Layout wrapperSize='small'>{error.message}</Layout>;
   }
 
   if (!data?.post) {
