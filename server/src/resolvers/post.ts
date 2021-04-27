@@ -75,7 +75,7 @@ export class PostResolver {
 
   @Query(() => Post, { nullable: true })
   async post(@Arg('id', () => Int) id: number): Promise<Post | undefined> {
-    const post = await Post.findOne(id);
+    const post = await Post.findOne(id, { relations: ['creator'] });
     return post;
   }
 
