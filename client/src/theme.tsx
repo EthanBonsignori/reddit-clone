@@ -45,12 +45,6 @@ const theme = extendTheme({
     body: 'IBM Plex Sans, sans-serif',
   },
   breakpoints,
-  icons: {
-    logo: {
-      path: 'placeholder',
-      viewBox: '',
-    },
-  },
 });
 
 export default theme;
