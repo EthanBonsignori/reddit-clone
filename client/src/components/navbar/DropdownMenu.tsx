@@ -1,25 +1,37 @@
 import { useApolloClient } from '@apollo/client';
 import { Button } from '@chakra-ui/button';
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
-import { MoonIcon } from '@chakra-ui/icons';
+import { Icon } from '@chakra-ui/icons';
 import { Box, Heading, Link } from '@chakra-ui/layout';
 import { Switch } from '@chakra-ui/switch';
 import NextLink from 'next/link';
+import { HiPlus } from 'react-icons/hi';
+import {
+  RedditCoinIcon,
+  RedditHelpIcon,
+  RedditLoginIcon,
+  RedditMoonIcon,
+  RedditPremiumIcon,
+  RedditProfileIcon,
+  RedditSettingsIcon,
+} from '../../assets/icons';
 import { useLogoutMutation } from '../../generated/graphql';
-import useLocalStorage from '../../hooks/useLocalStorage';
 
 interface DropdownMenuProps {
   loggedIn: boolean;
   dropdownRef: React.MutableRefObject<HTMLDivElement>;
   dropdownIsOpen: boolean;
+  onlineStatus?: boolean;
+  toggleOnlineStatus: () => void;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
   loggedIn,
   dropdownRef,
   dropdownIsOpen,
+  onlineStatus,
+  toggleOnlineStatus,
 }) => {
-  const [onlineStatus, setOnlineStatus] = useLocalStorage('onlineStatus', true);
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue('lightNavBg', 'darkNavBg');
   const borderColor = useColorModeValue('#edeff1', '#343536');
@@ -96,7 +108,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             _focus={{
               boxShadow: 'none',
             }}
-            onClickCapture={() => setOnlineStatus(!onlineStatus)}>
+            onClickCapture={toggleOnlineStatus}>
             {onlineStatus ? 'On' : 'Off'}
             <Switch
               sx={{
@@ -126,6 +138,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             My Stuff
           </Heading>
           <Button
+            className='profileButton'
             display='flex'
             alignItems='center'
             justifyContent='space-between'
@@ -147,9 +160,24 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             _focus={{
               boxShadow: 'none',
             }}>
+            <RedditProfileIcon
+              position='absolute'
+              left='16px'
+              top='10px'
+              width='20px'
+              height='20px'
+              color={iconColor}
+              transition='none'
+              sx={{
+                '.profileButton:hover &': {
+                  color: colorMode === 'light' ? '#fff' : '#000',
+                },
+              }}
+            />
             Profile
           </Button>
           <Button
+            className='createAvatarButton'
             display='flex'
             alignItems='center'
             justifyContent='space-between'
@@ -171,9 +199,25 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             _focus={{
               boxShadow: 'none',
             }}>
+            <Icon
+              as={HiPlus}
+              position='absolute'
+              left='16px'
+              top='10px'
+              width='20px'
+              height='20px'
+              color={iconColor}
+              transition='none'
+              sx={{
+                '.createAvatarButton:hover &': {
+                  color: colorMode === 'light' ? '#fff' : '#000',
+                },
+              }}
+            />
             Create Avatar
           </Button>
           <Button
+            className='settingsButton'
             display='flex'
             alignItems='center'
             justifyContent='space-between'
@@ -195,6 +239,20 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             _focus={{
               boxShadow: 'none',
             }}>
+            <RedditSettingsIcon
+              position='absolute'
+              left='16px'
+              top='10px'
+              width='20px'
+              height='20px'
+              color={iconColor}
+              transition='none'
+              sx={{
+                '.settingsButton:hover &': {
+                  color: colorMode === 'light' ? '#fff' : '#000',
+                },
+              }}
+            />
             User Settings
           </Button>
         </>
@@ -236,7 +294,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           boxShadow: 'none',
         }}
         onClickCapture={toggleColor}>
-        <MoonIcon
+        <RedditMoonIcon
           position='absolute'
           left='16px'
           top='10px'
@@ -279,6 +337,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         More Stuff
       </Heading>
       <Button
+        className='coinsButton'
         display='flex'
         alignItems='center'
         justifyContent='space-between'
@@ -300,9 +359,24 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         _focus={{
           boxShadow: 'none',
         }}>
-        Reddit Coins
+        <RedditCoinIcon
+          position='absolute'
+          left='16px'
+          top='10px'
+          width='20px'
+          height='20px'
+          color={iconColor}
+          transition='none'
+          sx={{
+            '.coinsButton:hover &': {
+              color: colorMode === 'light' ? '#fff' : '#000',
+            },
+          }}
+        />
+        notReddit Coins
       </Button>
       <Button
+        className='premiumButton'
         display='flex'
         alignItems='center'
         justifyContent='space-between'
@@ -324,9 +398,24 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         _focus={{
           boxShadow: 'none',
         }}>
-        Reddit Premium
+        <RedditPremiumIcon
+          position='absolute'
+          left='16px'
+          top='10px'
+          width='20px'
+          height='20px'
+          color={iconColor}
+          transition='none'
+          sx={{
+            '.premiumButton:hover &': {
+              color: colorMode === 'light' ? '#fff' : '#000',
+            },
+          }}
+        />
+        notReddit Premium
       </Button>
       <Button
+        className='helpButton'
         display='flex'
         alignItems='center'
         justifyContent='space-between'
@@ -348,11 +437,26 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         _focus={{
           boxShadow: 'none',
         }}>
+        <RedditHelpIcon
+          position='absolute'
+          left='16px'
+          top='10px'
+          width='20px'
+          height='20px'
+          color={iconColor}
+          transition='none'
+          sx={{
+            '.helpButton:hover &': {
+              color: colorMode === 'light' ? '#fff' : '#000',
+            },
+          }}
+        />
         Help Center
       </Button>
       <Box borderTop='1px solid' borderColor={borderColor} margin='0 16px' />
       {loggedIn ? (
         <Button
+          className='loginButton'
           display='flex'
           alignItems='center'
           justifyContent='space-between'
@@ -377,12 +481,27 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           disabled={logoutLoading}
           isLoading={logoutLoading}
           onClick={handleLogout}>
+          <RedditLoginIcon
+            position='absolute'
+            left='16px'
+            top='10px'
+            width='20px'
+            height='20px'
+            color={iconColor}
+            transition='none'
+            sx={{
+              '.loginButton:hover &': {
+                color: colorMode === 'light' ? '#fff' : '#000',
+              },
+            }}
+          />
           Log Out
         </Button>
       ) : (
         <NextLink href='/login' passHref>
           <Link _hover={{ textDecoration: 'none' }}>
             <Button
+              className='loginButton'
               display='flex'
               alignItems='center'
               justifyContent='space-between'
@@ -404,6 +523,20 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
               _focus={{
                 boxShadow: 'none',
               }}>
+              <RedditLoginIcon
+                position='absolute'
+                left='16px'
+                top='10px'
+                width='20px'
+                height='20px'
+                color={iconColor}
+                transition='none'
+                sx={{
+                  '.loginButton:hover &': {
+                    color: colorMode === 'light' ? '#fff' : '#000',
+                  },
+                }}
+              />
               Log In / Sign Up
             </Button>
           </Link>

@@ -1,5 +1,7 @@
 import { TriangleDownIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { RedditOnlineIcon, RedditSnooAvatarIcon } from '../../assets/icons';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import DropdownMenu from './DropdownMenu';
 
 interface LoggedInProps {
@@ -17,11 +19,19 @@ const LoggedIn: React.FC<LoggedInProps> = ({
   dropdownIsOpen,
   toggleDropdown,
 }) => {
+  const [onlineStatus, setOnlineStatus] = useLocalStorage('onlineStatus', true);
   const color = useColorModeValue('lightText', 'darkText');
   const bg = useColorModeValue('lightNavBg', 'darkNavBg');
   const iconColor = useColorModeValue('lightIcon', 'darkIcon');
   const buttonHoverBorder = useColorModeValue('#edeff1', '#343536');
+  const snooIconBg = useColorModeValue('#d7dfe2', 'darkIcon');
+  const onlineCircleFill = useColorModeValue('white', 'black');
+
   const { username } = user;
+
+  const toggleOnlineStatus = () => {
+    setOnlineStatus(!onlineStatus);
+  };
 
   return (
     <Flex flexDirection='row' alignItems='center' flexGrow={0}>
@@ -46,7 +56,7 @@ const LoggedIn: React.FC<LoggedInProps> = ({
           outline: 'none',
         }}>
         <Box
-          w='175px'
+          w='215px'
           ml='8px'
           textAlign='left'
           display='flex'
@@ -54,16 +64,31 @@ const LoggedIn: React.FC<LoggedInProps> = ({
           verticalAlign='baseline'
           fontSize='100%'>
           <Box mr='5px' pos='relative'>
-            <Box
+            <RedditSnooAvatarIcon
               float='left'
               borderRadius='4px'
-              maxH='24px'
-              maxW='24px'
+              maxHeight='24px'
+              maxWidth='24px'
               height='24px'
               width='24px'
-              border='1px solid'
-              borderColor={color}
+              background={snooIconBg}
+              fill='#fff'
             />
+            {onlineStatus && (
+              <RedditOnlineIcon
+                fill='#46d160'
+                height='50%'
+                position='absolute'
+                top='59%'
+                left='59%'
+                width='50%'
+                sx={{
+                  '.onlineCircle': {
+                    fill: onlineCircleFill,
+                  },
+                }}
+              />
+            )}
           </Box>
           <Text as='span' display='block'>
             <Text
@@ -110,6 +135,8 @@ const LoggedIn: React.FC<LoggedInProps> = ({
       </Button>
       <DropdownMenu
         loggedIn={true}
+        onlineStatus={onlineStatus}
+        toggleOnlineStatus={toggleOnlineStatus}
         dropdownRef={dropdownRef}
         dropdownIsOpen={dropdownIsOpen}
       />
