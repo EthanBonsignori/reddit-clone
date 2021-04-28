@@ -1,6 +1,11 @@
 import { TriangleDownIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
-import { RedditOnlineIcon, RedditSnooAvatarIcon } from '../../assets/icons';
+import {
+  RedditCoinIcon,
+  RedditKarmaIcon,
+  RedditOnlineIcon,
+  RedditSnooAvatarIcon,
+} from '../../assets/icons';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import DropdownMenu from './DropdownMenu';
 
@@ -43,14 +48,18 @@ const LoggedIn: React.FC<LoggedInProps> = ({
         alignItems='center'
         flexDir='row'
         width='100%'
+        maxW='215px'
         border='1px solid'
-        borderColor='transparent'
+        borderColor={dropdownIsOpen ? buttonHoverBorder : 'transparent'}
         borderRadius='4px'
         padding='2px 0'
         minH='32px'
         ml='8px'
         _hover={{
           borderColor: buttonHoverBorder,
+        }}
+        _active={{
+          background: bg,
         }}
         _focus={{
           outline: 'none',
@@ -107,6 +116,13 @@ const LoggedIn: React.FC<LoggedInProps> = ({
               fontWeight='500'
               lineHeight='16px'
               color='textMuted'>
+              <RedditKarmaIcon
+                marginRight='2px'
+                marginBottom='2.5px'
+                width='10px'
+                height='10px'
+                color='mainOrange'
+              />
               0 notKarma
             </Text>
             <Text
@@ -116,7 +132,14 @@ const LoggedIn: React.FC<LoggedInProps> = ({
               lineHeight='16px'
               color='textMuted'
               ml='8px'>
-              $ 0
+              <RedditCoinIcon
+                marginRight='2px'
+                marginBottom='2.5px'
+                width='10px'
+                height='10px'
+                color='#DDBD37'
+              />
+              0
             </Text>
           </Text>
           <TriangleDownIcon

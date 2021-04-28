@@ -58,13 +58,14 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     <Box
       ref={dropdownRef}
       bg={bg}
-      width='213px'
+      width='215px'
       maxH='80%'
       position='fixed'
       display={dropdownIsOpen ? 'block' : 'none'}
-      right='0px'
+      right='20px'
       top='39.5px'
       border='1px solid'
+      borderTop='none'
       borderColor={borderColor}
       borderRadius='0 0 4px 4px'
       overflow='hidden'
