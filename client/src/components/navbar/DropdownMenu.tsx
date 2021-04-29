@@ -22,7 +22,7 @@ interface DropdownMenuProps {
   dropdownRef: React.MutableRefObject<HTMLDivElement>;
   dropdownIsOpen: boolean;
   onlineStatus?: boolean;
-  toggleOnlineStatus: () => void;
+  toggleOnlineStatus?: () => void;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
