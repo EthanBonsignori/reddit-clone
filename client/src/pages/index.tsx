@@ -1,38 +1,32 @@
-import { Button } from '@chakra-ui/button';
-import { useColorModeValue } from '@chakra-ui/color-mode';
-import { Flex, Heading, Link, Stack } from '@chakra-ui/layout';
-import NextLink from 'next/link';
-import Navbar from '../components/navbar/Navbar';
+import { Box, Flex } from '@chakra-ui/layout';
+import CreatePost from '../components/CreatePost';
+import Layout from '../components/Layout';
 import PostList from '../components/post/PostList';
 import withApollo from '../utils/withApollo';
 
 const Index: React.FC = () => {
-  const color = useColorModeValue('lightText', 'darkText');
-  const bg = useColorModeValue('lightBg', 'darkBg');
-
   return (
-    <Stack
-      as='main'
-      align='center'
-      bg={bg}
-      color={color}
-      minH='calc(100vh)'
-      pb={10}>
-      <Navbar />
+    <Layout>
       <Flex
-        align='center'
-        justifyContent='space-between'
-        mb='1rem !important'
-        width='55%'>
-        <Heading>notReddit</Heading>
-        <NextLink href='/create-post' passHref>
-          <Link ml={10} as={Button}>
-            Create Post
-          </Link>
-        </NextLink>
+        flexDirection='row'
+        justifyContent='center'
+        margin='0 auto !important'
+        maxWidth='100%'
+        padding='20px 24px'>
+        <Box width='640px'>
+          <CreatePost />
+          <PostList />
+        </Box>
+        {/* Placeholder Box for Right column - has communities and other things on reddit */}
+        {/* <Box
+          margin='0 !important'
+          marginLeft='24px !important'
+          display='block'
+          width='312px'
+          flex='0 0 312px'
+          height='100px'></Box> */}
       </Flex>
-      <PostList />
-    </Stack>
+    </Layout>
   );
 };
 
