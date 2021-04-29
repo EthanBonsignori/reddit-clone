@@ -23,7 +23,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <Layout wrapperSize='small'>
+    <Layout>
       <Formik initialValues={{ email: '' }} onSubmit={handleSubmit}>
         {({ isSubmitting }) =>
           isComplete ? (

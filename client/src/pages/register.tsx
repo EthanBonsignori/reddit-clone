@@ -46,7 +46,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <Layout wrapperSize='small'>
+    <Layout>
       <Formik
         initialValues={{
           email: '',

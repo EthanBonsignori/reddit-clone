@@ -21,22 +21,22 @@ const PostById: React.FC = () => {
 
   if (loading) {
     return (
-      <Layout wrapperSize='small'>
+      <Layout>
         <Spinner color={color} size='xl' />
       </Layout>
     );
   }
 
   if (error) {
-    return <Layout wrapperSize='small'>{error.message}</Layout>;
+    return <Layout>{error.message}</Layout>;
   }
 
   if (!data?.post) {
-    return <Layout wrapperSize='small'>Could not find that Post.</Layout>;
+    return <Layout>Could not find that Post.</Layout>;
   }
 
   return (
-    <Layout wrapperSize='small'>
+    <Layout>
       <Post post={data?.post} single={true} />
     </Layout>
   );

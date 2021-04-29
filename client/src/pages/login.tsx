@@ -49,7 +49,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Layout wrapperSize='small'>
+    <Layout>
       <Formik
         initialValues={{ usernameOrEmail: '', password: '' }}
         onSubmit={handleSubmit}>

@@ -38,7 +38,7 @@ const CreatePost: React.FC = () => {
   };
 
   return (
-    <Layout wrapperSize='small'>
+    <Layout>
       <Formik initialValues={{ title: '', text: '' }} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>

@@ -61,7 +61,7 @@ const ResetPassword: React.FC = () => {
   };
 
   return (
-    <Layout wrapperSize='small'>
+    <Layout>
       <Formik
         initialValues={{ password: '', passwordRepeat: '' }}
         onSubmit={handleSubmit}>
