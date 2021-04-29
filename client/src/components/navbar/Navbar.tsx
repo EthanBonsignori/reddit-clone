@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <Box w='100%' minH='48px' marginBottom={8} /> {/* Spacer element */}
+      <Box w='100%' minH='48px' /> {/* Spacer element */}
       <Flex
         as='header'
         w='100%'

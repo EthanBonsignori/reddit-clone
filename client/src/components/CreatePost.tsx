@@ -21,7 +21,8 @@ const CreatePost: React.FC = () => {
       bg={bg}
       border='1px solid'
       borderColor={border}
-      marginBottom='16px'
+      margin='0 !important'
+      marginBottom='16px !important'
       padding='8px'>
       <NextLink href='/create-post' passHref>
         <Link
