@@ -20,7 +20,7 @@ import { useLogoutMutation } from '../../generated/graphql';
 interface DropdownMenuProps {
   loggedIn: boolean;
   dropdownRef: React.MutableRefObject<HTMLDivElement>;
-  dropdownIsOpen: boolean;
+  isDropdownOpen: boolean;
   onlineStatus?: boolean;
   toggleOnlineStatus?: () => void;
 }
@@ -28,7 +28,7 @@ interface DropdownMenuProps {
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
   loggedIn,
   dropdownRef,
-  dropdownIsOpen,
+  isDropdownOpen,
   onlineStatus,
   toggleOnlineStatus,
 }) => {
@@ -61,7 +61,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       width='215px'
       maxH='80%'
       position='fixed'
-      display={dropdownIsOpen ? 'block' : 'none'}
+      display={isDropdownOpen ? 'block' : 'none'}
       right='20px'
       top='39.5px'
       border='1px solid'
