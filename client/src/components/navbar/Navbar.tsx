@@ -2,18 +2,12 @@ import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { Box, Flex, Link } from '@chakra-ui/layout';
-import {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
 import NextLink from 'next/link';
+import { MutableRefObject, useRef, useState } from 'react';
 import { useMeQuery } from '../../generated/graphql';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { isServer } from '../../utils/isServer';
-import LoggedIn from './LoggedIn';
-import NotLoggedIn from './NotLoggedIn';
+import UserMenu from './UserMenu';
 
 const Navbar: React.FC = () => {
   const { colorMode } = useColorMode();
@@ -28,35 +22,12 @@ const Navbar: React.FC = () => {
     skip: isServer(),
   });
 
-  const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef() as MutableRefObject<HTMLDivElement>;
-  const dropdownButtonRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
-  const toggleDropdown: any = (value: boolean) => {
-    if (value !== null) {
-      return setDropdownIsOpen(value);
-    }
-    return useCallback(() => setDropdownIsOpen, [
-      dropdownIsOpen,
-      setDropdownIsOpen,
-    ]);
-  };
-
-  const handleOutsideClick = (event: MouseEvent) => {
-    if (event.target === dropdownButtonRef.current) {
-      return null;
-    }
-    if (!dropdownRef.current.contains(event.target as Node)) {
-      return toggleDropdown(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, []);
+  const closeDropdown = () => setDropdownOpen(false);
+  const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+  useOnClickOutside(dropdownRef, closeDropdown);
 
   return (
     <>
@@ -127,22 +98,12 @@ const Navbar: React.FC = () => {
               </InputGroup>
             </Box>
           </Flex>
-          {!data?.me ? (
-            <NotLoggedIn
-              dropdownRef={dropdownRef}
-              dropdownButtonRef={dropdownButtonRef}
-              dropdownIsOpen={dropdownIsOpen}
-              toggleDropdown={toggleDropdown}
-            />
-          ) : (
-            <LoggedIn
-              user={data.me}
-              dropdownRef={dropdownRef}
-              dropdownButtonRef={dropdownButtonRef}
-              dropdownIsOpen={dropdownIsOpen}
-              toggleDropdown={toggleDropdown}
-            />
-          )}
+          <UserMenu
+            user={data?.me || null}
+            dropdownRef={dropdownRef}
+            isDropdownOpen={isDropdownOpen}
+            toggleDropdown={toggleDropdown}
+          />
         </Flex>
       </Flex>
     </>
