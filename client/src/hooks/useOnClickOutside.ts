@@ -1,12 +1,22 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 // https://github.com/Pomax/react-onclickoutside/issues/310#issuecomment-503547025
-function useOnClickOutside(ref, handler) {
+function useOnClickOutside(
+  ref: React.MutableRefObject<HTMLDivElement>,
+  handler: () => void,
+  exempt: [React.MutableRefObject<HTMLElement>],
+): any {
   useEffect(
     () => {
       const listener = (event) => {
+        let isExempt = false;
+        for (let i = 0; i < exempt.length; i++) {
+          if (exempt[i].current === event.target) {
+            isExempt = true;
+          }
+        }
         // Do nothing if clicking ref's element or descendent elements
-        if (!ref.current || ref.current.contains(event.target)) {
+        if (!ref.current || ref.current.contains(event.target) || isExempt) {
           return;
         }
 
