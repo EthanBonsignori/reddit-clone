@@ -10,8 +10,10 @@ import {
 import NextLink from 'next/link';
 import {
   RedditCoinIcon,
+  RedditDownCaretIcon,
   RedditKarmaIcon,
   RedditOnlineIcon,
+  RedditPersonIcon,
   RedditSnooAvatarIcon,
 } from '../../assets/icons';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -102,139 +104,137 @@ const UserMenu: React.FC<UserMenuProps> = ({
           />
         </>
       ) : (
-        <>
-          <Button
-            ref={dropdownButtonRef}
-            onClick={toggleDropdown}
-            bg={bg}
+        <Button
+          ref={dropdownButtonRef}
+          onClick={toggleDropdown}
+          bg={bg}
+          display='flex'
+          alignItems='center'
+          flexDir='row'
+          width='100%'
+          maxW='215px'
+          border='1px solid'
+          borderColor={isDropdownOpen ? buttonHoverBorder : 'transparent'}
+          borderRadius='4px'
+          padding='2px 0'
+          minH='32px'
+          ml='8px'
+          _hover={{
+            borderColor: buttonHoverBorder,
+          }}
+          _active={{
+            bg: bg,
+          }}
+          _focus={{
+            outline: 'none',
+          }}>
+          <Box
+            w='215px'
+            ml='8px'
+            textAlign='left'
             display='flex'
             alignItems='center'
-            flexDir='row'
-            width='100%'
-            maxW='215px'
-            border='1px solid'
-            borderColor={isDropdownOpen ? buttonHoverBorder : 'transparent'}
-            borderRadius='4px'
-            padding='2px 0'
-            minH='32px'
-            ml='8px'
-            _hover={{
-              borderColor: buttonHoverBorder,
-            }}
-            _active={{
-              background: bg,
-            }}
-            _focus={{
-              outline: 'none',
-            }}>
-            <Box
-              w='215px'
-              ml='8px'
-              textAlign='left'
-              display='flex'
-              alignItems='center'
-              verticalAlign='baseline'
-              fontSize='100%'
-              pointerEvents='none'>
-              <Box mr='5px' pos='relative' pointerEvents='none'>
-                <RedditSnooAvatarIcon
-                  float='left'
-                  borderRadius='4px'
-                  maxHeight='24px'
-                  maxWidth='24px'
-                  height='24px'
-                  width='24px'
-                  background={snooIconBg}
-                  fill='#fff'
-                  pointerEvents='none'
-                />
-                {onlineStatus && (
-                  <RedditOnlineIcon
-                    fill='#46d160'
-                    height='50%'
-                    position='absolute'
-                    top='59%'
-                    left='59%'
-                    width='50%'
-                    pointerEvents='none'
-                    sx={{
-                      '.onlineCircle': {
-                        fill: onlineCircleFill,
-                      },
-                    }}
-                  />
-                )}
-              </Box>
-              <Text as='span' display='block' pointerEvents='none'>
-                <Text
-                  as='span'
-                  fontSize='12px'
-                  fontWeight='500'
-                  lineHeight='16px'
-                  display='block'
-                  whiteSpace='nowrap'
-                  color={color}
-                  pointerEvents='none'>
-                  {(user?.username as string) || null}
-                </Text>
-                <Text
-                  as='span'
-                  fontSize='12px'
-                  fontWeight='500'
-                  lineHeight='16px'
-                  color='textMuted'
-                  pointerEvents='none'>
-                  <RedditKarmaIcon
-                    marginRight='2px'
-                    marginBottom='2.5px'
-                    width='10px'
-                    height='10px'
-                    color='mainOrange'
-                  />
-                  0 notKarma
-                </Text>
-                <Text
-                  as='span'
-                  fontSize='12px'
-                  fontWeight='500'
-                  lineHeight='16px'
-                  color='textMuted'
-                  ml='8px'
-                  pointerEvents='none'>
-                  <RedditCoinIcon
-                    marginRight='2px'
-                    marginBottom='2.5px'
-                    width='10px'
-                    height='10px'
-                    color='#DDBD37'
-                    pointerEvents='none'
-                  />
-                  0
-                </Text>
-              </Text>
-              <TriangleDownIcon
-                color={iconColor}
-                height='10px'
-                width='10px'
-                maxHeight='10px'
-                maxWidth='10px'
-                ml='2px'
-                verticalAlign='middle'
-                position='absolute'
-                right='10px'
+            verticalAlign='baseline'
+            fontSize='100%'
+            pointerEvents='none'>
+            <Box mr='5px' pos='relative' pointerEvents='none'>
+              <RedditSnooAvatarIcon
+                float='left'
+                borderRadius='4px'
+                maxHeight='24px'
+                maxWidth='24px'
+                height='24px'
+                width='24px'
+                background={snooIconBg}
+                fill='#fff'
                 pointerEvents='none'
               />
+              {onlineStatus && (
+                <RedditOnlineIcon
+                  fill='#46d160'
+                  height='50%'
+                  position='absolute'
+                  top='59%'
+                  left='59%'
+                  width='50%'
+                  pointerEvents='none'
+                  sx={{
+                    '.onlineCircle': {
+                      fill: onlineCircleFill,
+                    },
+                  }}
+                />
+              )}
             </Box>
-          </Button>
-          <DropdownMenu
-            loggedIn={!!user}
-            onlineStatus={onlineStatus}
-            toggleOnlineStatus={toggleOnlineStatus}
-            dropdownRef={dropdownRef}
-            isDropdownOpen={isDropdownOpen}
-          />
-        </>
+            <Text as='span' display='block' pointerEvents='none'>
+              <Text
+                as='span'
+                fontSize='12px'
+                fontWeight='500'
+                lineHeight='16px'
+                display='block'
+                whiteSpace='nowrap'
+                color={color}
+                pointerEvents='none'>
+                {(user?.username as string) || null}
+              </Text>
+              <Text
+                as='span'
+                fontSize='12px'
+                fontWeight='500'
+                lineHeight='16px'
+                color='textMuted'
+                pointerEvents='none'>
+                <RedditKarmaIcon
+                  marginRight='2px'
+                  marginBottom='2.5px'
+                  width='10px'
+                  height='10px'
+                  color='mainOrange'
+                />
+                0 notKarma
+              </Text>
+              <Text
+                as='span'
+                fontSize='12px'
+                fontWeight='500'
+                lineHeight='16px'
+                color='textMuted'
+                ml='8px'
+                pointerEvents='none'>
+                <RedditCoinIcon
+                  marginRight='2px'
+                  marginBottom='2.5px'
+                  width='10px'
+                  height='10px'
+                  color='#DDBD37'
+                  pointerEvents='none'
+                />
+                0
+              </Text>
+            </Text>
+            <TriangleDownIcon
+              color={iconColor}
+              height='10px'
+              width='10px'
+              maxHeight='10px'
+              maxWidth='10px'
+              ml='2px'
+              verticalAlign='middle'
+              position='absolute'
+              right='10px'
+              pointerEvents='none'
+            />
+          </Box>
+        </Button>
       )}
+      <DropdownMenu
+        loggedIn={!!user}
+        onlineStatus={onlineStatus}
+        toggleOnlineStatus={toggleOnlineStatus}
+        dropdownRef={dropdownRef}
+        isDropdownOpen={isDropdownOpen}
+      />
     </Flex>
   );
 };
