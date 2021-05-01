@@ -20,15 +20,17 @@ import DropdownMenu from './DropdownMenu';
 
 interface UserMenuProps {
   user?: Record<string, unknown> | null;
-  dropdownRef: React.MutableRefObject<HTMLDivElement>;
   isDropdownOpen: boolean;
+  dropdownRef: React.MutableRefObject<HTMLDivElement>;
+  dropdownButtonRef: React.MutableRefObject<HTMLButtonElement>;
   toggleDropdown: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
   user,
-  dropdownRef,
   isDropdownOpen,
+  dropdownRef,
+  dropdownButtonRef,
   toggleDropdown,
 }) => {
   const [onlineStatus, setOnlineStatus] = useLocalStorage('onlineStatus', true);
@@ -77,6 +79,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             </NextLink>
           </Box>
           <Button
+            ref={dropdownButtonRef}
             onClick={toggleDropdown}
             width='70px'
             minH='32px'
@@ -101,6 +104,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
       ) : (
         <>
           <Button
+            ref={dropdownButtonRef}
             onClick={toggleDropdown}
             bg={bg}
             display='flex'
@@ -130,8 +134,9 @@ const UserMenu: React.FC<UserMenuProps> = ({
               display='flex'
               alignItems='center'
               verticalAlign='baseline'
-              fontSize='100%'>
-              <Box mr='5px' pos='relative'>
+              fontSize='100%'
+              pointerEvents='none'>
+              <Box mr='5px' pos='relative' pointerEvents='none'>
                 <RedditSnooAvatarIcon
                   float='left'
                   borderRadius='4px'
@@ -141,6 +146,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   width='24px'
                   background={snooIconBg}
                   fill='#fff'
+                  pointerEvents='none'
                 />
                 {onlineStatus && (
                   <RedditOnlineIcon
@@ -150,6 +156,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                     top='59%'
                     left='59%'
                     width='50%'
+                    pointerEvents='none'
                     sx={{
                       '.onlineCircle': {
                         fill: onlineCircleFill,
@@ -158,7 +165,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   />
                 )}
               </Box>
-              <Text as='span' display='block'>
+              <Text as='span' display='block' pointerEvents='none'>
                 <Text
                   as='span'
                   fontSize='12px'
@@ -166,7 +173,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   lineHeight='16px'
                   display='block'
                   whiteSpace='nowrap'
-                  color={color}>
+                  color={color}
+                  pointerEvents='none'>
                   {(user?.username as string) || null}
                 </Text>
                 <Text
@@ -174,7 +182,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   fontSize='12px'
                   fontWeight='500'
                   lineHeight='16px'
-                  color='textMuted'>
+                  color='textMuted'
+                  pointerEvents='none'>
                   <RedditKarmaIcon
                     marginRight='2px'
                     marginBottom='2.5px'
@@ -190,20 +199,21 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   fontWeight='500'
                   lineHeight='16px'
                   color='textMuted'
-                  ml='8px'>
+                  ml='8px'
+                  pointerEvents='none'>
                   <RedditCoinIcon
                     marginRight='2px'
                     marginBottom='2.5px'
                     width='10px'
                     height='10px'
                     color='#DDBD37'
+                    pointerEvents='none'
                   />
                   0
                 </Text>
               </Text>
               <TriangleDownIcon
                 color={iconColor}
-                pointerEvents='none'
                 height='10px'
                 width='10px'
                 maxHeight='10px'
@@ -212,6 +222,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 verticalAlign='middle'
                 position='absolute'
                 right='10px'
+                pointerEvents='none'
               />
             </Box>
           </Button>
