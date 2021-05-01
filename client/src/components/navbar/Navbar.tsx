@@ -3,7 +3,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { Box, Flex, Link } from '@chakra-ui/layout';
 import NextLink from 'next/link';
-import { MutableRefObject, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useMeQuery } from '../../generated/graphql';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { isServer } from '../../utils/isServer';
@@ -23,11 +23,13 @@ const Navbar: React.FC = () => {
   });
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const dropdownRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const dropdownButtonRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const closeDropdown = () => setDropdownOpen(false);
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
-  useOnClickOutside(dropdownRef, closeDropdown);
+
+  useOnClickOutside(dropdownRef, closeDropdown, [dropdownButtonRef]);
 
   return (
     <>
@@ -101,6 +103,7 @@ const Navbar: React.FC = () => {
           <UserMenu
             user={data?.me || null}
             dropdownRef={dropdownRef}
+            dropdownButtonRef={dropdownButtonRef}
             isDropdownOpen={isDropdownOpen}
             toggleDropdown={toggleDropdown}
           />
