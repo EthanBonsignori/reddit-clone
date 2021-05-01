@@ -80,28 +80,53 @@ const UserMenu: React.FC<UserMenuProps> = ({
               </Link>
             </NextLink>
           </Box>
-          <Button
-            ref={dropdownButtonRef}
-            onClick={toggleDropdown}
-            width='70px'
-            minH='32px'
-            ml='8px'
-            outline='none'
-            border='1px solid transparent'
-            borderRadius='4px'
-            _hover={{
-              borderColor: '#343536',
-            }}
-            _focus={{
-              outline: 'none',
-            }}>
-            <TriangleDownIcon color={iconColor} pointerEvents='none' />
-          </Button>
-          <DropdownMenu
-            loggedIn={false}
-            dropdownRef={dropdownRef}
-            isDropdownOpen={isDropdownOpen}
-          />
+          <Flex flexDirection='row' alignItems='center'>
+            <Button
+              ref={dropdownButtonRef}
+              onClick={toggleDropdown}
+              bg={bg}
+              display='flex'
+              flexDirection='row'
+              textAlign='left'
+              justifyContent='start'
+              width='70px'
+              minHeight='32px'
+              marginLeft='8px'
+              padding='2px 0'
+              outline='none'
+              border='1px solid'
+              borderColor={isDropdownOpen ? buttonHoverBorder : 'transparent'}
+              borderRadius='4px'
+              _hover={{
+                borderColor: buttonHoverBorder,
+              }}
+              _active={{
+                bg: bg,
+              }}
+              _focus={{
+                outline: 'none',
+              }}>
+              <RedditPersonIcon
+                color={iconColor}
+                pointerEvents='none'
+                height='24px'
+                width='24px'
+                maxHeight='24px'
+                maxWidth='24px'
+                borderRadius='4px'
+                float='left'
+              />
+              <RedditDownCaretIcon
+                color={iconColor}
+                display='inline-block'
+                height='20px'
+                width='20px'
+                verticalAlign='middle'
+                pointerEvents='none'
+                marginLeft='2px'
+              />
+            </Button>
+          </Flex>
         </>
       ) : (
         <Button
