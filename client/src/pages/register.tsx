@@ -1,11 +1,12 @@
 import { LinkIcon } from '@chakra-ui/icons';
-import { Box, Button, Link } from '@chakra-ui/react';
+import { Box, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import FormLinks from '../components/FormLinks';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
+import MainButton from '../components/MainButton';
 import { MeDocument, MeQuery, useRegisterMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 import withApollo from '../utils/withApollo';
@@ -47,64 +48,73 @@ const Register: React.FC = () => {
 
   return (
     <Layout>
-      <Formik
-        initialValues={{
-          email: '',
-          username: '',
-          password: '',
-          passwordRepeat: '',
-        }}
-        onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
-          <Form>
-            <InputField
-              name='username'
-              placeholder='Username'
-              label='Username'
-            />
-            <Box mt={4}>
-              <InputField
-                type='email'
-                name='email'
-                placeholder='Email'
-                label='Email'
+      <Flex flexDirection='column' bg='white' padding='24px' borderRadius='8px'>
+        <Heading
+          fontSize='18px'
+          fontWeight='500'
+          lineHeight='22px'
+          width='100%'
+          textAlign='left'>
+          Sign up
+        </Heading>
+        <Text width='100%' textAlign='left' marginBottom='28px' marginTop='8px'>
+          By continuing, you agree to our non-existent User Agreement and
+          Privacy Policy
+        </Text>
+        <Formik
+          initialValues={{
+            email: '',
+            username: '',
+            password: '',
+            passwordRepeat: '',
+          }}
+          onSubmit={handleSubmit}>
+          {({ isSubmitting }) => (
+            <Form style={{ width: '280px' }}>
+              <InputField name='username' label='Username' />
+              <Box mt={4}>
+                <InputField type='email' name='email' label='Email' />
+              </Box>
+              <Box mt={4}>
+                <InputField type='password' name='password' label='Password' />
+              </Box>
+              <Box mt={4}>
+                <InputField
+                  type='password'
+                  name='passwordRepeat'
+                  label='Repeat Password'
+                />
+              </Box>
+              <MainButton
+                type='submit'
+                text='Continue'
+                border='none'
+                width='100%'
+                color='white'
+                bg='mainBlue'
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+                mt={4}
               />
-            </Box>
-            <Box mt={4}>
-              <InputField
-                type='password'
-                name='password'
-                placeholder='Password'
-                label='Password'
-              />
-            </Box>
-            <Box mt={4}>
-              <InputField
-                type='password'
-                name='passwordRepeat'
-                placeholder='Repeat Password'
-                label='Repeat Password'
-              />
-            </Box>
-            <Button
-              type='submit'
-              color='white'
-              bgColor='teal'
-              isLoading={isSubmitting}
-              mt={4}>
-              Register
-            </Button>
-            <FormLinks>
-              <NextLink href='/login' passHref>
-                <Link>
-                  <LinkIcon mr={1} />
-                  Already have an Account? Log In
-                </Link>
-              </NextLink>
-            </FormLinks>
-          </Form>
-        )}
-      </Formik>
+              <FormLinks>
+                Already a notRedditor?
+                <NextLink href='/login' passHref>
+                  <Link
+                    fontSize='12px'
+                    fontWeight='600'
+                    letterSpacing='.5px'
+                    lineHeight='24px'
+                    textTransform='uppercase'
+                    color='mainBlue'
+                    marginLeft='3px'>
+                    Log In
+                  </Link>
+                </NextLink>
+              </FormLinks>
+            </Form>
+          )}
+        </Formik>
+      </Flex>
     </Layout>
   );
 };

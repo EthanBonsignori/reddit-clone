@@ -1,10 +1,17 @@
-import { Flex } from '@chakra-ui/layout';
+import { Box, Flex } from '@chakra-ui/layout';
 
 const FormLinks: React.FC = ({ children }) => {
   return (
-    <Flex direction='column' mt={6}>
+    <Box
+      direction='row'
+      marginTop='24px'
+      marginBottom='20px'
+      fontFamily='Noto Sans, sans-serif'
+      fontSize='12px'
+      fontWeight='400'
+      lineHeight='18px'>
       {children}
-    </Flex>
+    </Box>
   );
 };
 
