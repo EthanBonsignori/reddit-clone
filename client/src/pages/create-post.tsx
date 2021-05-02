@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { InputField } from '../components/InputField';
 import Layout from '../components/Layout';
 import { useCreatePostMutation } from '../generated/graphql';
-import { useIsAuth } from '../hooks/useIsAuth';
+import useIsAuth from '../hooks/useIsAuth';
 import withApollo from '../utils/withApollo';
 
 interface FormValues {
