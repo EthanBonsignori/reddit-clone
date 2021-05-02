@@ -1,4 +1,3 @@
-import { LinkIcon } from '@chakra-ui/icons';
 import { Box, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import NextLink from 'next/link';

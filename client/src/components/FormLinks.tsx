@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/layout';
 
 const FormLinks: React.FC = ({ children }) => {
   return (

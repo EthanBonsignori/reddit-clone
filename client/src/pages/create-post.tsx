@@ -1,5 +1,5 @@
 import { CloseIcon, WarningIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Link } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
