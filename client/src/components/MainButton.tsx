@@ -8,8 +8,8 @@ type MainButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
     color: string;
     bg: string;
     border: string;
-    isLoading: boolean;
-    disabled: boolean;
+    isLoading?: boolean;
+    disabled?: boolean;
   };
 
 const MainButton: React.FC<MainButtonProps> = ({
