@@ -49,6 +49,7 @@ const Register: React.FC = () => {
     <Layout>
       <Flex flexDirection='column' bg='white' padding='24px' borderRadius='8px'>
         <Heading
+          color='black'
           fontSize='18px'
           fontWeight='500'
           lineHeight='22px'
@@ -56,7 +57,12 @@ const Register: React.FC = () => {
           textAlign='left'>
           Sign up
         </Heading>
-        <Text width='100%' textAlign='left' marginBottom='28px' marginTop='8px'>
+        <Text
+          color='black'
+          width='100%'
+          textAlign='left'
+          marginBottom='28px'
+          marginTop='8px'>
           By continuing, you agree to our non-existent User Agreement and
           Privacy Policy
         </Text>
@@ -105,7 +111,14 @@ const Register: React.FC = () => {
                     lineHeight='24px'
                     textTransform='uppercase'
                     color='mainBlue'
-                    marginLeft='3px'>
+                    marginLeft='3px'
+                    _hover={{
+                      textDecoration: 'none',
+                      color: '#3394dc',
+                    }}
+                    _focus={{
+                      boxShadow: 'none',
+                    }}>
                     Log In
                   </Link>
                 </NextLink>
