@@ -1284,17 +1284,6 @@
     change-case-all "1.0.14"
     tslib "~2.2.0"
 
-"@graphql-codegen/typescript-urql@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/@graphql-codegen/typescript-urql/-/typescript-urql-2.0.5.tgz"
-  integrity sha512-D0uiKSDgKKJC+X5Fmrb882wSyNBo5C46YqAd3pYEGEFgaWkpTrvmSakQGrezJH0zflPTaqMBv8RJ4wyonuYYLA==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "^1.18.4"
-    "@graphql-codegen/visitor-plugin-common" "^1.19.1"
-    auto-bind "~4.0.0"
-    change-case-all "1.0.12"
-    tslib "~2.1.0"
-
 "@graphql-codegen/typescript@1.21.1", "@graphql-codegen/typescript@^1.21.1":
   version "1.21.1"
   resolved "https://registry.npmjs.org/@graphql-codegen/typescript/-/typescript-1.21.1.tgz"
@@ -1305,7 +1294,7 @@
     auto-bind "~4.0.0"
     tslib "~2.1.0"
 
-"@graphql-codegen/visitor-plugin-common@^1.19.0", "@graphql-codegen/visitor-plugin-common@^1.19.1":
+"@graphql-codegen/visitor-plugin-common@^1.19.0":
   version "1.19.1"
   resolved "https://registry.npmjs.org/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-1.19.1.tgz"
   integrity sha512-MJZXe5vXxV6PLOgHhQoz93gnjzJtbnVQXQKqVEcbyB9W8ImoKuTHsEf/eJ6yCL79f7X/2dnOOM84d5Osh1eaKg==
@@ -1560,7 +1549,7 @@
     is-promise "4.0.0"
     tslib "~2.0.1"
 
-"@graphql-typed-document-node/core@^3.0.0", "@graphql-typed-document-node/core@^3.1.0":
+"@graphql-typed-document-node/core@^3.0.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.1.0.tgz"
   integrity sha512-wYn6r8zVZyQJ6rQaALBEln5B1pzxb9shV5Ef97kTvn6yVGrqyXVnDqnU24MXnFubR+rZjBY9NWuxX3FB2sTsjg==
@@ -1872,22 +1861,6 @@
   dependencies:
     "@typescript-eslint/types" "4.22.0"
     eslint-visitor-keys "^2.0.0"
-
-"@urql/core@>=2.0.0", "@urql/core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@urql/core/-/core-2.0.0.tgz"
-  integrity sha512-Qj24CG8ullqZZsYmjrSH0JhH+nY7kj8GbVbA9si3KUjlYs75A/MBQU3i97j6oWyGldDBapyis2CfaQeXKbv8rA==
-  dependencies:
-    "@graphql-typed-document-node/core" "^3.1.0"
-    wonka "^4.0.14"
-
-"@urql/exchange-graphcache@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@urql/exchange-graphcache/-/exchange-graphcache-4.0.0.tgz#be7dd362b6949dee8f2188139adca692b70a3b05"
-  integrity sha512-UuLyR2tuy28KFmcMzD0aU3hWEa62H8Yfo9rBVAaXPxvGUD8g0Bq3NXUGLBvXxKMZcodn7AjYeVBlfPCHth9awA==
-  dependencies:
-    "@urql/core" ">=2.0.0"
-    wonka "^4.0.14"
 
 "@wry/context@^0.6.0":
   version "0.6.0"
@@ -4772,13 +4745,6 @@ next-apollo@^5.0.4:
   resolved "https://registry.yarnpkg.com/next-apollo/-/next-apollo-5.0.4.tgz#01952cd1803a663672bb18e10e0a09800ebc76fa"
   integrity sha512-nkm8W8XmZiLziFFa7X8FxxbanRx6pRWhkhDIIAprD1A5siSNwZnMPW3GbjwnOoQLyFH8rMHS0SZZ6AAmSWzF9Q==
 
-next-urql@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/next-urql/-/next-urql-3.0.1.tgz#552f8e317abe13f70251db77c0005c8e0f969854"
-  integrity sha512-Owu+Y+svp17vYmAR+qJlLITQswSF00kdmys125syKG5uH4R0l3rD1wThEX64gWdUpSj4+P8jhP1wZQrrRJa8KA==
-  dependencies:
-    react-ssr-prepass "^1.2.1"
-
 next@latest:
   version "10.1.3"
   resolved "https://registry.yarnpkg.com/next/-/next-10.1.3.tgz#e26e8371343a42bc2ba9be5cb253a7d324d03673"
@@ -5494,11 +5460,6 @@ react-remove-scroll@2.4.1:
     tslib "^1.0.0"
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
-
-react-ssr-prepass@^1.2.1:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-ssr-prepass/-/react-ssr-prepass-1.4.0.tgz#33a3db19414f0f8f9f3f781c88f760ae366b4f51"
-  integrity sha512-0SzdmiQUtHvhxCabHg9BI/pkJfijGkQ0jQL6fC4YFy7idaDOuaiQLsajIkkNxffFXtJFHIWFITlve2WB88e0Jw==
 
 react-style-singleton@^2.1.0:
   version "2.1.1"
@@ -6468,14 +6429,6 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-urql@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/urql/-/urql-2.0.2.tgz"
-  integrity sha512-ku5lT0vq7Efpd6Mg1r40C/z39GbGxFtuK2+le26+v125cQL7OVGzE2XzG3jSiHa5m6abCoZO9xS6N2QIfoJ/gg==
-  dependencies:
-    "@urql/core" "^2.0.0"
-    wonka "^4.0.14"
-
 use-callback-ref@^1.2.1, use-callback-ref@^1.2.3:
   version "1.2.5"
   resolved "https://registry.npmjs.org/use-callback-ref/-/use-callback-ref-1.2.5.tgz"
@@ -6611,11 +6564,6 @@ which@^2.0.1:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
-
-wonka@^4.0.14:
-  version "4.0.15"
-  resolved "https://registry.npmjs.org/wonka/-/wonka-4.0.15.tgz"
-  integrity sha512-U0IUQHKXXn6PFo9nqsHphVCE5m3IntqZNB9Jjn7EB1lrR7YTDY3YWgFvEvwniTzXSvOH/XMzAZaIfJF/LvHYXg==
 
 word-wrap@^1.2.3:
   version "1.2.3"
