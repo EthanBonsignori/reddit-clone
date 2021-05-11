@@ -19,7 +19,7 @@ import { User } from '../entities/User';
 import { isAuth } from '../middleware/isAuth';
 import { MyContext } from '../types';
 import { FieldError } from '../utils/FieldError';
-import { validatePost } from '../utils/validatePost';
+import { validatePost } from '../utils/validateText';
 
 @InputType()
 export class PostInput {

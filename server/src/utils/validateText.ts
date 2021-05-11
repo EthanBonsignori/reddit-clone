@@ -31,3 +31,15 @@ export const validatePost = (input: PostInput) => {
 
   return null;
 };
+
+export const validateComment = (text: string) => {
+  if (!text) {
+    return [
+      {
+        field: 'text',
+        message: 'You must include some text',
+      },
+    ];
+  }
+  return null;
+};

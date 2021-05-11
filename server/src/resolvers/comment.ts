@@ -16,7 +16,7 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import { Comment } from '../entities/Comment';
-import { validateComment } from 'src/utils/validatePost';
+import { validateComment } from '../utils/validateText';
 
 @ObjectType()
 class CommentResponse {
