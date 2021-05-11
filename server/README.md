@@ -1,7 +1,11 @@
 Server for notReddit
 
-### New migrations:
+### Migrations:
+
+To generate a new migration (looks at files in dist/entities):
 
 ```bash
-yarn typeorm migration:create -n {MigrationName}
+yarn typeorm migration:generate -n {MigrationName}
 ```
+
+If error, restart typescript server or delete dist folder and recompile.
