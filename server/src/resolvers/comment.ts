@@ -1,7 +1,3 @@
-import { User } from '../entities/User';
-import { isAuth } from '../middleware/isAuth';
-import { MyContext } from '../types';
-import { FieldError } from '../utils/FieldError';
 import {
   Arg,
   Ctx,
@@ -16,6 +12,10 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import { Comment } from '../entities/Comment';
+import { User } from '../entities/User';
+import { isAuth } from '../middleware/isAuth';
+import { MyContext } from '../types';
+import { FieldError } from '../utils/FieldError';
 import { validateComment } from '../utils/validateText';
 
 @ObjectType()
