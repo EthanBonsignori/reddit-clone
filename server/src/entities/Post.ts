@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Upvote } from './Upvote';
 import { User } from './User';
+import { Comment } from './Comment';
 
 @ObjectType()
 @Entity()
@@ -44,6 +45,9 @@ export class Post extends BaseEntity {
 
   @OneToMany(() => Upvote, (upvote) => upvote.post)
   upvotes: Upvote[];
+
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
 
   @Field(() => String)
   @CreateDateColumn()
