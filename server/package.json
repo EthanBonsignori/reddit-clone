@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "tsc -w",
     "nodemon": "nodemon dist/index.js",
-    "dev": "yarn nodemon && yarn watch",
+    "dev": "yarn watch && yarn nodemon",
     "start": "node dist/index.js",
     "build": "tsc",
     "deploy": "./deploy.sh",
