@@ -35,7 +35,7 @@ Built with:
 - Postgres (pg)
 - TypeORM
 
-### TODOS
+### TODOs
 
 - Add more form validation (yup or validator)
 - Add Comments
