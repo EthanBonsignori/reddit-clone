@@ -9,7 +9,6 @@ import 'dotenv-safe/config';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import { __prod__ } from './constants';
-import { HelloResolver } from './resolvers/hello';
 import { PostResolver } from './resolvers/post';
 import { UserResolver } from './resolvers/user';
 import { MyContext } from './types';
@@ -65,7 +64,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, PostResolver, UserResolver],
+      resolvers: [PostResolver, UserResolver],
       validate: false,
     }),
     context: ({ req, res }): MyContext => ({
