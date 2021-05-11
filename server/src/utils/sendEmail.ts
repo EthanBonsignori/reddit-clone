@@ -1,26 +1,24 @@
 import nodemailer from 'nodemailer';
 
 async function sendEmail(to: string, html: string) {
+  const testAccount = await nodemailer.createTestAccount();
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: 'nwm5sm55zk5vjsll@ethereal.email', // hardcoded for now
-      pass: 'SWgBcVZGQUhTz16QqX',
+      user: testAccount.user,
+      pass: testAccount.pass,
     },
   });
 
-  const info = await transporter.sendMail({
-    from: '"Reddit-Clone" notreddit@redditclone.com',
+  return await transporter.sendMail({
+    from: '"notReddit" donotreply@notreddit.website',
     to: to,
-    subject: 'Forgot Password',
+    subject: 'Password reset',
     html,
   });
-
-  console.log(info);
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }
 
 export default sendEmail;

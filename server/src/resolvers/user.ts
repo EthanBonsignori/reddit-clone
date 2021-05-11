@@ -13,7 +13,7 @@ import {
   Root,
 } from 'type-graphql';
 import { v4 } from 'uuid';
-import { COOKIE_NAME, FORGOT_PASSWORD_PREFIX } from '../constants';
+import { COOKIE_NAME, FORGOT_PASSWORD_PREFIX, __prod__ } from '../constants';
 import { User } from '../entities/User';
 import { UsernamePasswordInput } from '../utils/UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister';
@@ -145,9 +145,10 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async forgotPassword(
     @Arg('email') email: string,
+    @Arg('username') username: string,
     @Ctx() { redis }: MyContext,
   ) {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email, username });
     if (!user) {
       return true;
     }
@@ -161,10 +162,15 @@ export class UserResolver {
     );
 
     try {
+      const url = __prod__
+        ? 'https://notreddit.website'
+        : 'http://localhost:3000';
       await sendEmail(
         email,
-        // TODO: change in prod
-        `Click here to <a href='http://localhost:3000/reset-password/${token}'>reset your password</a>.`,
+        `<h1>
+          Click here to
+          <a href='${url}/reset-password/${token}'><b>reset your password</b></a>.
+        </h1>`,
       );
       return true;
     } catch (err) {
