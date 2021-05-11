@@ -38,4 +38,4 @@ Built with:
 ### TODOS
 
 - Add more form validation (yup or validator)
-- Allow user to cancel vote by selecting the same vote again
+- Add Comments
