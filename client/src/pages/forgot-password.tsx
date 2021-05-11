@@ -1,4 +1,3 @@
-import { InfoIcon, LinkIcon } from '@chakra-ui/icons';
 import { Box, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
@@ -65,98 +64,87 @@ const ForgotPassword: React.FC = () => {
           password.
         </Text>
         <Formik initialValues={{ email: '' }} onSubmit={handleSubmit}>
-          {({ isSubmitting }) =>
-            isComplete ? (
-              <Flex mt={3} flexDir='column'>
-                <Flex border='1px solid grey' borderRadius='5px' p='10px'>
-                  <InfoIcon
-                    mr={3}
-                    color='orange'
-                    alignSelf='center'
-                    h={6}
-                    w={6}
-                  />
-                  If an account with that email exists, you will receive an
-                  email with a link to reset your password.
-                </Flex>
-                <FormLinks>
-                  <NextLink href='/' passHref>
-                    <Link mt={2}>
-                      <LinkIcon /> Go back Home
-                    </Link>
-                  </NextLink>
-                </FormLinks>
-              </Flex>
-            ) : (
-              <Form style={{ width: '280px' }}>
-                <InputField type='text' name='username' label='Username' />
-                <Box mt={4}>
-                  <InputField type='email' name='email' label='Email Address' />
+          {({ isSubmitting }) => (
+            <Form style={{ width: '280px' }}>
+              <InputField type='text' name='username' label='Username' />
+              <Box mt={4}>
+                <InputField type='email' name='email' label='Email Address' />
+              </Box>
+              <MainButton
+                type='submit'
+                isLoading={isSubmitting}
+                disabled={isComplete}
+                text='Reset Password'
+                color='white'
+                bg='mainBlue'
+                border='none'
+                marginTop='2em'
+                fontFamily='Noto Sans, sans-serif'
+                fontSize='14px'
+                fontWeight='700'
+                letterSpacing='unset'
+                lineHeight='18px'
+                borderRadius='999px'
+                width='100%'
+                height='40px'
+                padding='0 16px'
+                transition='none'
+              />
+              {isComplete ? (
+                <Box
+                  color='#24a0ed'
+                  marginTop='20px'
+                  fontSize='12px'
+                  fontWeight='500'
+                  lineHeight='16px'>
+                  Thanks! If your notReddit username and email address match,
+                  you&apos;ll get an email with a link to reset your password
+                  shortly.
                 </Box>
-                <MainButton
-                  type='submit'
-                  isLoading={isSubmitting}
-                  disabled={isSubmitting}
-                  text='Reset Password'
-                  color='white'
-                  bg='mainBlue'
-                  border='none'
-                  marginTop='2em'
-                  fontFamily='Noto Sans, sans-serif'
-                  fontSize='14px'
-                  fontWeight='700'
-                  letterSpacing='unset'
-                  lineHeight='18px'
-                  borderRadius='999px'
-                  width='100%'
-                  height='40px'
-                  padding='0 16px'
-                  transition='none'
-                />
-                <FormLinks>
-                  <NextLink href='/login' passHref>
-                    <Link
-                      fontSize='12px'
-                      fontWeight='600'
-                      letterSpacing='.5px'
-                      lineHeight='24px'
-                      textTransform='uppercase'
-                      color='mainBlue'
-                      _hover={{
-                        textDecoration: 'none',
-                        color: '#3394dc',
-                      }}
-                      _focus={{
-                        boxShadow: 'none',
-                      }}>
-                      Log In
-                    </Link>
-                  </NextLink>
-                  <Text as='span' color='mainBlue' margin='0 4px'>
-                    •
-                  </Text>
-                  <NextLink href='/login' passHref>
-                    <Link
-                      fontSize='12px'
-                      fontWeight='600'
-                      letterSpacing='.5px'
-                      lineHeight='24px'
-                      textTransform='uppercase'
-                      color='mainBlue'
-                      _hover={{
-                        textDecoration: 'none',
-                        color: '#3394dc',
-                      }}
-                      _focus={{
-                        boxShadow: 'none',
-                      }}>
-                      SIGN UP
-                    </Link>
-                  </NextLink>
-                </FormLinks>
-              </Form>
-            )
-          }
+              ) : null}
+              <FormLinks>
+                <NextLink href='/login' passHref>
+                  <Link
+                    fontSize='12px'
+                    fontWeight='600'
+                    letterSpacing='.5px'
+                    lineHeight='24px'
+                    textTransform='uppercase'
+                    color='mainBlue'
+                    _hover={{
+                      textDecoration: 'none',
+                      color: '#3394dc',
+                    }}
+                    _focus={{
+                      boxShadow: 'none',
+                    }}>
+                    Log In
+                  </Link>
+                </NextLink>
+                <Text as='span' color='mainBlue' margin='0 4px'>
+                  •
+                </Text>
+                <NextLink href='/login' passHref>
+                  <Link
+                    fontSize='12px'
+                    fontWeight='600'
+                    letterSpacing='.5px'
+                    lineHeight='24px'
+                    textTransform='uppercase'
+                    color='mainBlue'
+                    _hover={{
+                      textDecoration: 'none',
+                      color: '#3394dc',
+                    }}
+                    _focus={{
+                      boxShadow: 'none',
+                    }}>
+                    SIGN UP
+                  </Link>
+                </NextLink>
+              </FormLinks>
+            </Form>
+          )}
         </Formik>
       </Flex>
     </Layout>
