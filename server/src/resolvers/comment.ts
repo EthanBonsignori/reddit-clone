@@ -48,6 +48,8 @@ export class CommentResolver {
   @UseMiddleware(isAuth)
   async createComment(
     @Arg('text') text: string,
+    @Arg('postId') postId: number,
+    @Arg('parentId', () => Number, { nullable: true }) parentId: number,
     @Ctx() { req }: MyContext,
   ): Promise<CommentResponse | undefined> {
     const errors = validateComment(text);
@@ -59,6 +61,8 @@ export class CommentResolver {
     try {
       comment = await Comment.create({
         text,
+        postId,
+        parentId,
         creatorId: req.session.userId,
       }).save();
     } catch (err) {
